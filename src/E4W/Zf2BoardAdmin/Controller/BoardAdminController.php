@@ -17,34 +17,20 @@
  * and is licensed under the MIT license.
  */
 
-namespace Eye4web\Zf2BoardAdmin;
+namespace Eye4web\Zf2BoardAdmin\Controller;
 
-use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
-class Module
+class BoardAdminController extends AbstractActionController
 {
-    public function onBootstrap(MvcEvent $e)
+    public function boardListAction()
     {
-    }
+        $viewModel = new ViewModel();
+        $viewModel->setTemplate('e4w-zf2-board-admin/board/list.phtml');
 
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
+        $viewModel->setVariable('boards', []);
 
-    public function getControllerConfig()
-    {
-        return include __DIR__ . '/config/controller.config.php';
-    }
-
-    public function getAutoloaderConfig()
-    {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
+        return $viewModel;
     }
 }

@@ -17,34 +17,8 @@
  * and is licensed under the MIT license.
  */
 
-namespace Eye4web\Zf2BoardAdmin;
-
-use Zend\Mvc\MvcEvent;
-
-class Module
-{
-    public function onBootstrap(MvcEvent $e)
-    {
-    }
-
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
-
-    public function getControllerConfig()
-    {
-        return include __DIR__ . '/config/controller.config.php';
-    }
-
-    public function getAutoloaderConfig()
-    {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
-    }
-}
+return [
+    'factories' => [
+        'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController' => 'Eye4web\Zf2BoardAdmin\Factory\Controller\BoardAdminControllerFactory',
+    ]
+];

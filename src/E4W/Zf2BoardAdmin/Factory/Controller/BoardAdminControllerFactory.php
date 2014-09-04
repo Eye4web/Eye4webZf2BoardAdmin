@@ -17,34 +17,24 @@
  * and is licensed under the MIT license.
  */
 
-namespace Eye4web\Zf2BoardAdmin;
+namespace Eye4web\Zf2BoardAdmin\Factory\Controller;
 
-use Zend\Mvc\MvcEvent;
+use Eye4web\Zf2BoardAdmin\Controller\BoardAdminController;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Module
+class BoardAdminControllerFactory implements FactoryInterface
 {
-    public function onBootstrap(MvcEvent $e)
+    /**
+     * Create controller
+     *
+     * @param ServiceLocatorInterface $controllerManager
+     * @return BoardAdminController
+     */
+    public function createService(ServiceLocatorInterface $controllerManager)
     {
-    }
+        $controller = new BoardAdminController();
 
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
-    }
-
-    public function getControllerConfig()
-    {
-        return include __DIR__ . '/config/controller.config.php';
-    }
-
-    public function getAutoloaderConfig()
-    {
-        return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
-        );
+        return $controller;
     }
 }

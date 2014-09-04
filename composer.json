@@ -1,6 +1,6 @@
 {
-    "name": "eye4web/e4w-zf2-board-admin",
-    "description": "Administration for E4W\\Zf2Board",
+    "name": "eye4web/eye4web-zf2-board-admin",
+    "description": "Administration for Eye4web\\Zf2Board",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -9,7 +9,7 @@
         "forum",
         "admin"
     ],
-    "homepage": "https://github.com/Eye4web/E4WZf2BoardAdmin",
+    "homepage": "https://github.com/Eye4web/Eye4webZf2BoardAdmin",
     "authors": [
         {
             "name": "Nikolaj Løvenhardt Petersen",
@@ -29,7 +29,7 @@
     },
     "autoload": {
         "psr-0": {
-            "E4W\\Zf2Board": "src/"
+            "Eye4web\\Zf2Board": "src/"
         },
         "classmap": [
             "./Module.php"
