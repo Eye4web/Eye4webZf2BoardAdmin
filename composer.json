@@ -1,6 +1,6 @@
 {
     "name": "eye4web/e4w-zf2-board-admin",
-    "description": "Administration for E4W\Zf2Board",
+    "description": "Administration for E4W\\Zf2Board",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -34,7 +34,7 @@
             "./Module.php"
         ]
     },
-    "require-dev" : {
+    "require-dev": {
         "phpmd/phpmd" : "1.4.*",
         "phpunit/phpunit" : "4.*",
         "squizlabs/php_codesniffer" : "1.5.*",
