@@ -1,0 +1,44 @@
+{
+    "name": "eye4web/e4w-zf2-board-admin",
+    "description": "Administration for E4W\Zf2Board",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "zf2",
+        "board",
+        "forum",
+        "admin"
+    ],
+    "homepage": "https://github.com/Eye4web/E4WZf2BoardAdmin",
+    "authors": [
+        {
+            "name": "Nikolaj Løvenhardt Petersen",
+            "email": "np@eye4web.dk"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master-dev"
+        }
+    },
+    "require": {
+        "php": ">=5.4",
+        "zendframework/zendframework": "~2.3",
+        "eye4web/e4w-zf2-board": "9999999-dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "E4W\\Zf2Board": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    },
+    "require-dev" : {
+        "phpmd/phpmd" : "1.4.*",
+        "phpunit/phpunit" : "4.*",
+        "squizlabs/php_codesniffer" : "1.5.*",
+        "zendframework/zend-captcha" : "~2.1",
+        "codeclimate/php-test-reporter": "dev-master"
+    }
+}
