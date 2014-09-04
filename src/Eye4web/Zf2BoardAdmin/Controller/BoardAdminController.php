@@ -27,7 +27,7 @@ class BoardAdminController extends AbstractActionController
     public function boardListAction()
     {
         $viewModel = new ViewModel();
-        $viewModel->setTemplate('e4w-zf2-board-admin/board/list.phtml');
+        $viewModel->setTemplate('eye4web-zf2-board-admin/board/list.phtml');
 
         $viewModel->setVariable('boards', []);
 

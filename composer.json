@@ -24,7 +24,7 @@
     "require": {
         "php": ">=5.4",
         "zendframework/zendframework": "~2.3",
-        "eye4web/e4w-zf2-board": "9999999-dev",
+        "eye4web/eye4web-zf2-board": "9999999-dev",
         "zf-commons/zfc-admin": "0.2.*"
     },
     "autoload": {
