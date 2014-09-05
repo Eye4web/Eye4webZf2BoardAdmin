@@ -19,17 +19,28 @@
 
 namespace Eye4web\Zf2BoardAdmin\Controller;
 
+use Eye4web\Zf2Board\Service\BoardService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class BoardAdminController extends AbstractActionController
 {
+    /** @var BoardService */
+    protected $boardService;
+
+    public function __construct(BoardService $boardService)
+    {
+        $this->boardService = $boardService;
+    }
+
     public function boardListAction()
     {
+        $boards = $this->boardService->findAll();
+
         $viewModel = new ViewModel();
         $viewModel->setTemplate('eye4web-zf2-board-admin/board/list.phtml');
 
-        $viewModel->setVariable('boards', []);
+        $viewModel->setVariable('boards', $boards);
 
         return $viewModel;
     }

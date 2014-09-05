@@ -33,7 +33,13 @@ class BoardAdminControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $controllerManager)
     {
-        $controller = new BoardAdminController();
+        /** @var ServiceLocatorInterface $serviceLocator */
+        $serviceLocator = $controllerManager->getServiceLocator();
+
+        /** @var \Eye4web\Zf2Board\Service\BoardService $boardService */
+        $boardService = $serviceLocator->get('Eye4web\Zf2Board\Service\BoardService');
+
+        $controller = new BoardAdminController($boardService);
 
         return $controller;
     }

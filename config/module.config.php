@@ -64,6 +64,15 @@ return [
         ],
     ],
 
+    'view_manager' => [
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
+        'template_path_stack' => [
+            __DIR__ . '/../view',
+        ],
+    ],
+
     'navigation' => [
         'admin' => [
             'Eye4web\Zf2BoardAdmin' => [
