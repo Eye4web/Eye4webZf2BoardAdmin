@@ -55,6 +55,16 @@ return [
                                             ],
                                         ],
                                     ],
+                                    'edit' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/edit/:board',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController',
+                                                'action'     => 'boardEdit',
+                                            ],
+                                        ],
+                                    ]
                                 ],
                             ],
                         ],

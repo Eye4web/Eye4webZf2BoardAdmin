@@ -8,6 +8,7 @@ $boards = $this->boards;
     <tr>
         <td><?=$this->translate('ID')?></td>
         <td><?=$this->translate('Name')?></td>
+        <td></td>
     </tr>
     </thead>
 
@@ -16,6 +17,15 @@ $boards = $this->boards;
         <tr>
             <td><?=$board->getId()?></td>
             <td><?=$board->getName()?></td>
+            <td style="text-align: right;">
+                <a href="<?=$this->url('zfcadmin/zf2-board-admin/board/edit', ['board' => $board])?>" title="<?=$this->translate('Edit')?>" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-pencil"></i> <?=$this->translate('Edit')?>
+                </a>
+
+                <a href="?delete=<?=$board->getId()?>" title="<?=$this->translate('Delete')?>" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-remove"></i> <?=$this->translate('Delete')?>
+                </a>
+            </td>
         </tr>
     <?php } ?>
     </tbody>
