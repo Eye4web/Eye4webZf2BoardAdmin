@@ -17,33 +17,30 @@
  * and is licensed under the MIT license.
  */
 
-namespace Eye4web\Zf2BoardAdmin\Factory\Controller;
+namespace Eye4web\Zf2BoardAdmin\Factory\Form\Board;
 
-use Eye4web\Zf2BoardAdmin\Controller\BoardAdminController;
+use Eye4web\Zf2BoardAdmin\Form\Board\EditForm;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class BoardAdminControllerFactory implements FactoryInterface
+class EditFormFactory implements FactoryInterface
 {
     /**
-     * Create controller
+     * Create service
      *
-     * @param ServiceLocatorInterface $controllerManager
-     * @return BoardAdminController
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return EditForm
      */
-    public function createService(ServiceLocatorInterface $controllerManager)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /** @var ServiceLocatorInterface $serviceLocator */
-        $serviceLocator = $controllerManager->getServiceLocator();
+        /** @var \Eye4web\Zf2Board\Options\ModuleOptions $moduleOptions */
+        $moduleOptions = $serviceLocator->get('Eye4web\Zf2Board\Options\ModuleOptions');
 
-        /** @var \Eye4web\Zf2Board\Service\BoardService $boardService */
-        $boardService = $serviceLocator->get('Eye4web\Zf2Board\Service\BoardService');
+        $entityName = $moduleOptions->getBoardEntity();
+        $object = new $entityName;
 
-        /** @var \Eye4web\Zf2BoardAdmin\Form\Board\EditForm $boardEditForm */
-        $boardEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Board\EditForm');
+        $form = new EditForm($object);
 
-        $controller = new BoardAdminController($boardService, $boardEditForm);
-
-        return $controller;
+        return $form;
     }
 }

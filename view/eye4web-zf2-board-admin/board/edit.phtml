@@ -1,0 +1,13 @@
+<?php
+/** @var \Eye4web\Zf2Board\Entity\Board $board */
+$board = $this->board;
+
+/** @var \Eye4web\Zf2BoardAdmin\Form\Board\EditForm $form */
+$form = $this->form;
+?>
+<h1><?=sprintf($this->translate('Edit board "%s"'), $board->getName())?></h1>
+
+<?=$this->form()->openTag($form)?>
+<?=$this->formRow($form->get('name'))?><br />
+<?=$this->formButton($form->get('submit')->setLabel('Edit'))?>
+<?=$this->form()->closeTag($form)?>
