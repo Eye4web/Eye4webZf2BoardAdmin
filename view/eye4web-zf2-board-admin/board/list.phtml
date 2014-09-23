@@ -17,11 +17,14 @@ $boards = $this->boards;
         <tr>
             <td><?=$board->getId()?></td>
             <td><?=$board->getName()?></td>
-            <td>
-                <div class="btn-group pull-right">
-                    <a href="<?=$this->url('zfcadmin/zf2-board-admin/board/edit', ['id' => $board->getId()])?>" class="btn btn-primary"><?=$this->translate('Edit')?></a>
-                    <a href="?delete=<?=$board->getId()?>" class="btn btn-danger"><?=$this->translate('Delete')?></a>
-                </div>
+            <td style="text-align: right;">
+                <a href="<?=$this->url('zfcadmin/zf2-board-admin/board/edit', ['id' => $board->getId()])?>" title="<?=$this->translate('Edit')?>" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-pencil"></i> <?=$this->translate('Edit')?>
+                </a>
+
+                <a href="?delete=<?=$board->getId()?>" title="<?=$this->translate('Delete')?>" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-remove"></i> <?=$this->translate('Delete')?>
+                </a>
             </td>
         </tr>
     <?php } ?>
