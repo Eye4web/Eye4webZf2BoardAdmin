@@ -41,6 +41,16 @@ class BoardAdminController extends AbstractActionController
 
     public function boardListAction()
     {
+        if (isset($_GET['delete'])) {
+            $board = $this->boardService->find($_GET['delete']);
+
+            if ($board) {
+                $this->boardService->delete($_GET['delete']);
+            }
+
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
+        }
+
         $boards = $this->boardService->findAll();
 
         $viewModel = new ViewModel([
