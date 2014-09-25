@@ -67,6 +67,35 @@ return [
                                     ]
                                 ],
                             ],
+                            'topic' => [
+                                'type' => 'Zend\Mvc\Router\Http\Literal',
+                                'options' => [
+                                    'route' => '/topic'
+                                ],
+                                'may_terminate' => false,
+                                'child_routes' => [
+                                    'list' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/list/:board',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController',
+                                                'action'     => 'topicList',
+                                            ],
+                                        ],
+                                    ],
+                                    'edit' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/edit/:id',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController',
+                                                'action'     => 'topicEdit',
+                                            ],
+                                        ],
+                                    ]
+                                ],
+                            ],
                         ],
                     ],
                 ],

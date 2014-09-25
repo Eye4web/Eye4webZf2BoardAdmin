@@ -20,8 +20,10 @@
 namespace Eye4web\Zf2BoardAdmin\Controller;
 
 use Eye4web\Zf2Board\Service\BoardService;
+use Eye4web\Zf2Board\Service\TopicService;
 use Eye4web\Zf2BoardAdmin\Exception;
 use Eye4web\Zf2BoardAdmin\Form\Board\EditForm as BoardEditForm;
+use Eye4web\Zf2BoardAdmin\Form\Topic\EditForm as TopicEditForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -30,22 +32,32 @@ class BoardAdminController extends AbstractActionController
     /** @var BoardService */
     protected $boardService;
 
+    /** @var TopicService */
+    protected $topicService;
+
     /** @var BoardEditForm */
     protected $boardEditForm;
 
-    public function __construct(BoardService $boardService, BoardEditForm $boardEditForm)
+    /** @var TopicEditForm */
+    protected $topicEditForm;
+
+    public function __construct(BoardService $boardService, BoardEditForm $boardEditForm, TopicService $topicService, TopicEditForm $topicEditForm)
     {
         $this->boardService = $boardService;
         $this->boardEditForm = $boardEditForm;
+        $this->topicService = $topicService;
+        $this->topicEditForm = $topicEditForm;
     }
 
     public function boardListAction()
     {
+        $boardService = $this->boardService;
+
         if (isset($_GET['delete'])) {
-            $board = $this->boardService->find($_GET['delete']);
+            $board = $boardService->find($_GET['delete']);
 
             if ($board) {
-                $this->boardService->delete($_GET['delete']);
+                $boardService->delete($_GET['delete']);
             }
 
             return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
@@ -95,6 +107,79 @@ class BoardAdminController extends AbstractActionController
 
         if ($boardService->edit($prg, $board)) {
             return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
+        }
+
+        return $viewModel;
+    }
+
+    public function topicListAction()
+    {
+        $boardService = $this->boardService;
+        $topicService = $this->topicService;
+
+        $board = $boardService->find($this->params('board'));
+
+        if (isset($_GET['delete'])) {
+            $topic = $topicService->find($_GET['delete']);
+
+            if ($topic) {
+                $topicService->delete($_GET['delete']);
+            }
+
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()]);
+        }
+
+        if (!$board) {
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
+        }
+
+        $topics = $topicService = $topicService->findByBoard($board->getId());
+
+        $viewModel = new ViewModel([
+            'board' => $board,
+            'topics' => $topics,
+        ]);
+
+        $viewModel->setTemplate('eye4web-zf2-board-admin/topic/list.phtml');
+
+        return $viewModel;
+    }
+
+    public function topicEditAction()
+    {
+        $topicService = $this->topicService;
+        $boardService = $this->boardService;
+        $id = $this->params('id');
+
+        $topic = $topicService->find($id);
+        $board = $boardService->find($topic->getBoard());
+
+        if (!$topic) {
+            throw new Exception\RuntimeException('Topic with ID #' . $id . ' could not be found');
+        }
+
+        $form = $this->topicEditForm;
+        $form->bind($topic);
+
+        $viewModel = new ViewModel([
+            'form' => $form,
+            'topic' => $topic,
+        ]);
+
+        $viewModel->setTemplate('eye4web-zf2-board-admin/topic/edit.phtml');
+
+        $redirectUrl = $this->url()->fromRoute('zfcadmin/zf2-board-admin/topic/edit', ['id' => $topic->getId()]);
+
+        $prg = $this->prg($redirectUrl, true);
+
+        if ($prg instanceof \Zend\Http\PhpEnvironment\Response) {
+            return $prg;
+        } elseif ($prg === false) {
+            return $viewModel;
+        }
+
+        if ($topicService->edit($prg, $topic)) {
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()]);
         }
 
         return $viewModel;
