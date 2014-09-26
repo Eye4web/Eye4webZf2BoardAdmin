@@ -39,19 +39,25 @@ class BoardAdminControllerFactory implements FactoryInterface
         /** @var \Eye4web\Zf2Board\Service\BoardService $boardService */
         $boardService = $serviceLocator->get('Eye4web\Zf2Board\Service\BoardService');
 
-        /** @var \Eye4web\Zf2BoardAdmin\Form\Board\EditForm $boardEditForm */
-        $boardEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Board\EditForm');
-
-        /** @var \Eye4web\Zf2BoardAdmin\Form\Topic\EditForm $topicEditForm */
-        $topicEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Topic\EditForm');
-
         /** @var \Eye4web\Zf2Board\Service\TopicService $topicService */
         $topicService = $serviceLocator->get('Eye4web\Zf2Board\Service\TopicService');
 
         /** @var \Eye4web\Zf2Board\Service\PostService $postService */
         $postService = $serviceLocator->get('Eye4web\Zf2Board\Service\PostService');
 
-        $controller = new BoardAdminController($boardService, $topicService, $postService, $boardEditForm, $topicEditForm);
+        /** @var \Eye4web\Zf2Board\Service\AuthorService $authorService */
+        $authorService = $serviceLocator->get('Eye4web\Zf2Board\Service\AuthorService');
+
+        /** @var \Eye4web\Zf2BoardAdmin\Form\Board\EditForm $boardEditForm */
+        $boardEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Board\EditForm');
+
+        /** @var \Eye4web\Zf2BoardAdmin\Form\Topic\EditForm $topicEditForm */
+        $topicEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Topic\EditForm');
+
+        /** @var \Eye4web\Zf2Board\Form\Post\EditForm $postEditForm */
+        $postEditForm = $serviceLocator->get('Eye4web\Zf2Board\Form\Post\EditForm');
+
+        $controller = new BoardAdminController($boardService, $topicService, $postService, $authorService, $boardEditForm, $topicEditForm, $postEditForm);
 
         return $controller;
     }

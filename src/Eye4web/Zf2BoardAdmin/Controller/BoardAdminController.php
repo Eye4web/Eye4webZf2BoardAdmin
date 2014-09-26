@@ -19,12 +19,14 @@
 
 namespace Eye4web\Zf2BoardAdmin\Controller;
 
+use Eye4web\Zf2Board\Service\AuthorService;
 use Eye4web\Zf2Board\Service\BoardService;
 use Eye4web\Zf2Board\Service\PostService;
 use Eye4web\Zf2Board\Service\TopicService;
 use Eye4web\Zf2BoardAdmin\Exception;
 use Eye4web\Zf2BoardAdmin\Form\Board\EditForm as BoardEditForm;
 use Eye4web\Zf2BoardAdmin\Form\Topic\EditForm as TopicEditForm;
+use Eye4web\Zf2Board\Form\Post\EditForm as PostEditForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -39,19 +41,27 @@ class BoardAdminController extends AbstractActionController
     /** @var PostService */
     protected $postService;
 
+    /** @var AuthorService */
+    protected $authorService;
+
     /** @var BoardEditForm */
     protected $boardEditForm;
 
     /** @var TopicEditForm */
     protected $topicEditForm;
 
-    public function __construct(BoardService $boardService, TopicService $topicService, PostService $postService, BoardEditForm $boardEditForm, TopicEditForm $topicEditForm)
+    /** @var PostEditForm */
+    protected $postEditForm;
+
+    public function __construct(BoardService $boardService, TopicService $topicService, PostService $postService, AuthorService $authorService, BoardEditForm $boardEditForm, TopicEditForm $topicEditForm, PostEditForm $postEditForm)
     {
         $this->boardService = $boardService;
         $this->topicService = $topicService;
         $this->postService = $postService;
+        $this->authorService = $authorService;
         $this->boardEditForm = $boardEditForm;
         $this->topicEditForm = $topicEditForm;
+        $this->postEditForm = $postEditForm;
     }
 
     public function boardListAction()
@@ -157,11 +167,12 @@ class BoardAdminController extends AbstractActionController
         $id = $this->params('id');
 
         $topic = $topicService->find($id);
-        $board = $boardService->find($topic->getBoard());
 
         if (!$topic) {
             throw new Exception\RuntimeException('Topic with ID #' . $id . ' could not be found');
         }
+
+        $board = $boardService->find($topic->getBoard());
 
         $form = $this->topicEditForm;
         $form->bind($topic);
@@ -223,6 +234,49 @@ class BoardAdminController extends AbstractActionController
         ]);
 
         $viewModel->setTemplate('eye4web-zf2-board-admin/post/list.phtml');
+
+        return $viewModel;
+    }
+
+    public function postEditAction()
+    {
+        $postService = $this->postService;
+        $topicService = $this->topicService;
+        $id = $this->params('id');
+
+        $post = $postService->find($id);
+
+        if (!$post) {
+            throw new Exception\RuntimeException('Post with ID #' . $id . ' could not be found');
+        }
+
+        $topic = $topicService->find($post->getTopic());
+
+        $form = $this->postEditForm;
+        $form->bind($post);
+
+        $viewModel = new ViewModel([
+            'form' => $form,
+            'post' => $post,
+        ]);
+
+        $viewModel->setTemplate('eye4web-zf2-board-admin/post/edit.phtml');
+
+        $redirectUrl = $this->url()->fromRoute('zfcadmin/zf2-board-admin/post/edit', ['id' => $post->getId()]);
+
+        $prg = $this->prg($redirectUrl, true);
+
+        if ($prg instanceof \Zend\Http\PhpEnvironment\Response) {
+            return $prg;
+        } elseif ($prg === false) {
+            return $viewModel;
+        }
+
+        $user = $this->authorService->find($post->getUser());
+
+        if ($postService->update($prg, $topic, $user)) {
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/post/list', ['topic' => $topic->getId()]);
+        }
 
         return $viewModel;
     }

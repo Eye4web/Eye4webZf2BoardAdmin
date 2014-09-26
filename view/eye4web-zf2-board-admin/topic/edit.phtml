@@ -5,7 +5,7 @@ $topic = $this->topic;
 /** @var \Eye4web\Zf2BoardAdmin\Form\Board\EditForm $form */
 $form = $this->form;
 ?>
-<h1><?=sprintf($this->translate('Edit topic "%s"'), $topic->getName())?></h1>
+    <h1><?=sprintf($this->translate('Edit topic "%s"'), $topic->getName())?></h1>
 
 <?=$this->form()->openTag($form)?>
 <?=$this->formRow($form->get('name'))?><br />
