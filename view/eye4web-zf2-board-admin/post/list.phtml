@@ -1,0 +1,37 @@
+<?php
+/** @var \Eye4web\Zf2Board\Entity\PostInterface[] $posts */
+$posts = $this->posts;
+
+/** @var \Eye4web\Zf2Board\Entity\TopicInterface $topic */
+$topic = $this->topic;
+?>
+<h1><?=sprintf($this->translate('Posts posted to topic "%s"'), $topic->getName())?></h1>
+
+<a href="<?=$this->url('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()])?>" class="btn btn-link"><i class="glyphicon glyphicon-arrow-left"></i>&nbsp; <?=$this->translate('Back to topic overview')?></a>
+
+<table class="table">
+    <thead>
+    <tr>
+        <td><?=$this->translate('ID')?></td>
+        <td><?=$this->translate('Text')?></td>
+        <td><?=$this->translate('User')?></td>
+        <td><?=$this->translate('Date')?></td>
+        <td></td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <?php foreach ($posts as $post) { ?>
+        <tr>
+            <td><?=$post->getId()?></td>
+            <td><?=$post->getText()?></td>
+            <td><?=$this->zf2BoardHelper()->getAuthor($post->getUser())->getFirstName()?> <?=$this->zf2BoardHelper()->getAuthor($post->getUser())->getLastName()?></td>
+            <td><?=$post->getCreated()->format('Y/m/d H:i')?></td>
+            <td style="text-align: right;">
+                <a href="<?=$this->url('zfcadmin/zf2-board-admin/topic/edit', ['id' => $post->getId()])?>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> <?=$this->translate('Edit')?></a>
+                <a href="?delete=<?=$post->getId()?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> <?=$this->translate('Delete')?></a>
+            </td>
+        </tr>
+    <?php } ?>
+    </tbody>
+</table>

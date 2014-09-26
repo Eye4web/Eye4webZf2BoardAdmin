@@ -28,7 +28,7 @@ $topics = $this->topics;
             <td><?=$this->zf2BoardHelper()->getAuthor($topic->getUser())->getFirstName()?> <?=$this->zf2BoardHelper()->getAuthor($topic->getUser())->getLastName()?></td>
             <td><?=$topic->getCreated()->format('Y/m/d H:i')?></td>
             <td style="text-align: right;">
-                <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i> <?=$this->translate('Posts')?></a>
+                <a href="<?=$this->url('zfcadmin/zf2-board-admin/post/list', ['topic' => $topic->getId()])?>" class="btn btn-default"><i class="glyphicon glyphicon-th-list"></i> <?=$this->translate('Posts')?></a>
                 <a href="<?=$this->url('zfcadmin/zf2-board-admin/topic/edit', ['id' => $topic->getId()])?>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> <?=$this->translate('Edit')?></a>
                 <a href="?delete=<?=$topic->getId()?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> <?=$this->translate('Delete')?></a>
             </td>

@@ -1,0 +1,14 @@
+?php
+/** @var \Eye4web\Zf2Board\Entity\TopicInterface $topic */
+$topic = $this->topic;
+
+/** @var \Eye4web\Zf2BoardAdmin\Form\Board\EditForm $form */
+$form = $this->form;
+?>
+<h1><?=sprintf($this->translate('Edit topic "%s"'), $topic->getName())?></h1>
+
+<?=$this->form()->openTag($form)?>
+<?=$this->formRow($form->get('name'))?><br />
+<?=$this->formRow($form->get('text'))?><br />
+<?=$this->formButton($form->get('submit')->setLabel('Edit'))?>
+<?=$this->form()->closeTag($form)?>

@@ -48,7 +48,10 @@ class BoardAdminControllerFactory implements FactoryInterface
         /** @var \Eye4web\Zf2Board\Service\TopicService $topicService */
         $topicService = $serviceLocator->get('Eye4web\Zf2Board\Service\TopicService');
 
-        $controller = new BoardAdminController($boardService, $boardEditForm, $topicService, $topicEditForm);
+        /** @var \Eye4web\Zf2Board\Service\PostService $postService */
+        $postService = $serviceLocator->get('Eye4web\Zf2Board\Service\PostService');
+
+        $controller = new BoardAdminController($boardService, $topicService, $postService, $boardEditForm, $topicEditForm);
 
         return $controller;
     }

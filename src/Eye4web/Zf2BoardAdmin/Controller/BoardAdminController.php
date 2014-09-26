@@ -20,6 +20,7 @@
 namespace Eye4web\Zf2BoardAdmin\Controller;
 
 use Eye4web\Zf2Board\Service\BoardService;
+use Eye4web\Zf2Board\Service\PostService;
 use Eye4web\Zf2Board\Service\TopicService;
 use Eye4web\Zf2BoardAdmin\Exception;
 use Eye4web\Zf2BoardAdmin\Form\Board\EditForm as BoardEditForm;
@@ -35,17 +36,21 @@ class BoardAdminController extends AbstractActionController
     /** @var TopicService */
     protected $topicService;
 
+    /** @var PostService */
+    protected $postService;
+
     /** @var BoardEditForm */
     protected $boardEditForm;
 
     /** @var TopicEditForm */
     protected $topicEditForm;
 
-    public function __construct(BoardService $boardService, BoardEditForm $boardEditForm, TopicService $topicService, TopicEditForm $topicEditForm)
+    public function __construct(BoardService $boardService, TopicService $topicService, PostService $postService, BoardEditForm $boardEditForm, TopicEditForm $topicEditForm)
     {
         $this->boardService = $boardService;
-        $this->boardEditForm = $boardEditForm;
         $this->topicService = $topicService;
+        $this->postService = $postService;
+        $this->boardEditForm = $boardEditForm;
         $this->topicEditForm = $topicEditForm;
     }
 
@@ -133,7 +138,7 @@ class BoardAdminController extends AbstractActionController
             return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
         }
 
-        $topics = $topicService = $topicService->findByBoard($board->getId());
+        $topics = $topicService->findByBoard($board->getId());
 
         $viewModel = new ViewModel([
             'board' => $board,
@@ -181,6 +186,43 @@ class BoardAdminController extends AbstractActionController
         if ($topicService->edit($prg, $topic)) {
             return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()]);
         }
+
+        return $viewModel;
+    }
+
+    public function postListAction()
+    {
+        $boardService = $this->boardService;
+        $topicService = $this->topicService;
+        $postService = $this->postService;
+
+        $topic = $topicService->find($this->params('topic'));
+
+        if (!$topic) {
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
+        }
+
+        $board = $boardService->find($topic->getBoard());
+
+        if (isset($_GET['delete'])) {
+            $post = $postService->find($_GET['delete']);
+
+            if ($post) {
+                $postService->delete($_GET['delete']);
+            }
+
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/post/list', ['topic' => $topic->getId()]);
+        }
+
+        $posts = $postService->findByTopic($topic->getId());
+
+        $viewModel = new ViewModel([
+            'board' => $board,
+            'topic' => $topic,
+            'posts' => $posts,
+        ]);
+
+        $viewModel->setTemplate('eye4web-zf2-board-admin/post/list.phtml');
 
         return $viewModel;
     }
