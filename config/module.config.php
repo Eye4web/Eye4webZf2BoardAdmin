@@ -74,6 +74,16 @@ return [
                                                 'action'     => 'boardCreate',
                                             ],
                                         ],
+                                    ],
+                                    'delete' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/delete/:id',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController',
+                                                'action'     => 'boardDelete',
+                                            ],
+                                        ],
                                     ]
                                 ],
                             ],

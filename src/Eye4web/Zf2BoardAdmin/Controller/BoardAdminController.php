@@ -55,18 +55,6 @@ class BoardAdminController extends AbstractActionController
 
     public function boardListAction()
     {
-        $boardService = $this->boardService;
-
-        if ($this->params()->fromQuery('delete', false)) {
-            $board = $boardService->find($this->params()->fromQuery('delete'));
-
-            if ($board) {
-                $boardService->delete($this->params()->fromQuery('delete'));
-            }
-
-            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
-        }
-
         $boards = $this->boardService->findAll();
 
         $viewModel = new ViewModel([
@@ -76,6 +64,17 @@ class BoardAdminController extends AbstractActionController
         $viewModel->setTemplate('eye4web-zf2-board-admin/board/list.phtml');
 
         return $viewModel;
+    }
+
+    public function boardDeleteAction()
+    {
+        $board = $this->boardService->find($this->params('id'));
+
+        if ($board) {
+            $this->boardAdminService->delete($this->params('id'));
+        }
+
+        return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
     }
 
     public function boardCreateAction()

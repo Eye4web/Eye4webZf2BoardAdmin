@@ -3,6 +3,7 @@
 $boards = $this->boards;
 ?>
 <h1><?=$this->translate('Boards')?></h1>
+<a class="btn btn-success" href="<?= $this->url('zfcadmin/zf2-board-admin/board/create') ?>">Create Board</a>
 <table class="table">
     <thead>
     <tr>
@@ -26,7 +27,7 @@ $boards = $this->boards;
                     <i class="glyphicon glyphicon-pencil"></i> <?=$this->translate('Edit')?>
                 </a>
 
-                <a href="?delete=<?=$board->getId()?>" title="<?=$this->translate('Delete')?>" class="btn btn-danger">
+                <a href="<?= $this->url('zfcadmin/zf2-board-admin/board/delete', ['id' => $board->getId()]) ?>" title="<?=$this->translate('Delete')?>" class="btn btn-danger">
                     <i class="glyphicon glyphicon-remove"></i> <?=$this->translate('Delete')?>
                 </a>
             </td>

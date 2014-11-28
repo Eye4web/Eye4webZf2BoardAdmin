@@ -19,7 +19,11 @@
 
 namespace Eye4web\Zf2BoardAdmin\Factory\Mapper\DoctrineORM;
 
+use Eye4web\Zf2Board\Mapper\BoardMapperInterface;
+use Eye4web\Zf2Board\Options\ModuleOptions;
+use Eye4web\Zf2Board\Service\BoardService;
 use Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM\BoardAdminMapper;
+use Eye4web\Zf2BoardAdmin\Options\ModuleOptionsInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -36,10 +40,19 @@ class BoardAdminMapperFactory implements FactoryInterface
         /** @var \Doctrine\ORM\EntityManager $objectManager */
         $objectManager = $serviceManager->get('Doctrine\ORM\EntityManager');
 
-        /** @var \Eye4web\Zf2BoardAdmin\Options\ModuleOptionsInterface $options */
+        /** @var ModuleOptions $options */
+        $boardOptions = $serviceManager->get('Eye4web\Zf2Board\Options\ModuleOptions');
+
+        /** @var BoardService $boardService */
+        $boardService = $serviceManager->get('Eye4web\Zf2Board\Service\BoardService');
+
+        /** @var BoardMapperInterface $mapper */
+        $boardMapper = $serviceManager->get($boardOptions->getBoardMapper());
+
+        /** @var ModuleOptionsInterface $options */
         $options = $serviceManager->get('Eye4web\Zf2BoardAdmin\Options\ModuleOptions');
 
-        $mapper = new BoardAdminMapper($objectManager, $options);
+        $mapper = new BoardAdminMapper($objectManager, $boardService, $boardMapper, $options);
 
         return $mapper;
     }

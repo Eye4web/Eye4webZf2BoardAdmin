@@ -22,11 +22,12 @@ namespace Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Eye4web\Zf2Board\Entity\BoardInterface;
-use Eye4web\Zf2Board\Mapper\DoctrineORM\BoardMapper;
+use Eye4web\Zf2Board\Mapper\BoardMapperInterface;
+use Eye4web\Zf2Board\Service\BoardService;
 use Eye4web\Zf2BoardAdmin\Mapper\BoardAdminMapperInterface;
 use Eye4web\Zf2BoardAdmin\Options\ModuleOptionsInterface;
 
-class BoardAdminMapper extends BoardMapper implements BoardAdminMapperInterface
+class BoardAdminMapper implements BoardAdminMapperInterface
 {
     /** @var EntityManager */
     protected $objectManager;
@@ -34,12 +35,19 @@ class BoardAdminMapper extends BoardMapper implements BoardAdminMapperInterface
     /** @var ModuleOptionsInterface */
     protected $options;
 
+    /** @var BoardService */
+    protected $boardService;
+
     public function __construct(
         ObjectManager $objectManager,
+        BoardService $boardService,
+        BoardMapperInterface $boardMapper,
         ModuleOptionsInterface $options
     ) {
         $this->objectManager = $objectManager;
         $this->options = $options;
+        $this->boardMapper = $boardMapper;
+        $this->boardService = $boardService;
     }
 
     /**
@@ -49,7 +57,7 @@ class BoardAdminMapper extends BoardMapper implements BoardAdminMapperInterface
      */
     public function delete($id)
     {
-        $board = $this->find($id);
+        $board = $this->boardService->find($id);
 
         if (!$board) {
             throw new \Exception('The board does not exist');
@@ -67,7 +75,7 @@ class BoardAdminMapper extends BoardMapper implements BoardAdminMapperInterface
      */
     public function create(BoardInterface $board)
     {
-        return $this->save($board);
+        return $this->boardMapper->save($board);
     }
 
     /**
@@ -76,6 +84,6 @@ class BoardAdminMapper extends BoardMapper implements BoardAdminMapperInterface
      */
     public function edit(BoardInterface $board)
     {
-        return $this->save($board);
+        return $this->boardMapper->save($board);
     }
 }
