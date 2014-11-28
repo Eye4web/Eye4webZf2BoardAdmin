@@ -20,5 +20,7 @@
 return [
     'factories' => [
         'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController' => 'Eye4web\Zf2BoardAdmin\Factory\Controller\BoardAdminControllerFactory',
+        'Eye4web\Zf2BoardAdmin\Controller\TopicAdminController' => 'Eye4web\Zf2BoardAdmin\Factory\Controller\TopicAdminControllerFactory',
+        'Eye4web\Zf2BoardAdmin\Controller\PostAdminController' => 'Eye4web\Zf2BoardAdmin\Factory\Controller\PostAdminControllerFactory',
     ]
 ];

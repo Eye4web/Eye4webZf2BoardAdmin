@@ -79,7 +79,7 @@ return [
                                         'options' => [
                                             'route' => '/list/:board',
                                             'defaults' => [
-                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController',
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\TopicAdminController',
                                                 'action'     => 'topicList',
                                             ],
                                         ],
@@ -89,7 +89,7 @@ return [
                                         'options' => [
                                             'route' => '/edit/:id',
                                             'defaults' => [
-                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController',
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\TopicAdminController',
                                                 'action'     => 'topicEdit',
                                             ],
                                         ],
@@ -108,7 +108,7 @@ return [
                                         'options' => [
                                             'route' => '/list/:topic',
                                             'defaults' => [
-                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController',
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\PostAdminController',
                                                 'action'     => 'postList',
                                             ],
                                         ],
@@ -118,7 +118,7 @@ return [
                                         'options' => [
                                             'route' => '/edit/:id',
                                             'defaults' => [
-                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController',
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\PostAdminController',
                                                 'action'     => 'postEdit',
                                             ],
                                         ],

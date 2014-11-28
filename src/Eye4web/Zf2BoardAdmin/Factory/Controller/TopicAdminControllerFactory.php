@@ -19,11 +19,11 @@
 
 namespace Eye4web\Zf2BoardAdmin\Factory\Controller;
 
-use Eye4web\Zf2BoardAdmin\Controller\BoardAdminController;
+use Eye4web\Zf2BoardAdmin\Controller\TopicAdminController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class BoardAdminControllerFactory implements FactoryInterface
+class TopicAdminControllerFactory implements FactoryInterface
 {
     /**
      * Create controller
@@ -39,10 +39,13 @@ class BoardAdminControllerFactory implements FactoryInterface
         /** @var \Eye4web\Zf2Board\Service\BoardService $boardService */
         $boardService = $serviceLocator->get('Eye4web\Zf2Board\Service\BoardService');
 
-        /** @var \Eye4web\Zf2BoardAdmin\Form\Board\EditForm $boardEditForm */
-        $boardEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Board\EditForm');
+        /** @var \Eye4web\Zf2Board\Service\TopicService $topicService */
+        $topicService = $serviceLocator->get('Eye4web\Zf2Board\Service\TopicService');
 
-        $controller = new BoardAdminController($boardService, $boardEditForm);
+        /** @var \Eye4web\Zf2BoardAdmin\Form\Topic\EditForm $topicEditForm */
+        $topicEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Topic\EditForm');
+
+        $controller = new TopicAdminController($boardService, $topicService, $topicEditForm);
 
         return $controller;
     }

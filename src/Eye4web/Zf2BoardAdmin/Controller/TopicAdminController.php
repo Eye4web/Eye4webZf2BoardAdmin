@@ -30,68 +30,84 @@ use Eye4web\Zf2Board\Form\Post\EditForm as PostEditForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class BoardAdminController extends AbstractActionController
+class TopicAdminController extends AbstractActionController
 {
     /** @var BoardService */
     protected $boardService;
 
-    /** @var BoardEditForm */
-    protected $boardEditForm;
+    /** @var TopicService */
+    protected $topicService;
+
+    /** @var TopicEditForm */
+    protected $topicEditForm;
 
     public function __construct(BoardService $boardService,
-                                BoardEditForm $boardEditForm)
+                                TopicService $topicService,
+                                TopicEditForm $topicEditForm)
     {
         $this->boardService = $boardService;
-        $this->boardEditForm = $boardEditForm;
+        $this->topicService = $topicService;
+        $this->topicEditForm = $topicEditForm;
     }
 
-    public function boardListAction()
+    public function topicListAction()
     {
         $boardService = $this->boardService;
+        $topicService = $this->topicService;
 
-        if ($this->params()->fromQuery('delete', false)) {
-            $board = $boardService->find($this->params()->fromQuery('delete'));
+        $board = $boardService->find($this->params('board'));
 
-            if ($board) {
-                $boardService->delete($this->params()->fromQuery('delete'));
+        if (isset($_GET['delete'])) {
+            $topic = $topicService->find($_GET['delete']);
+
+            if ($topic) {
+                $topicService->delete($_GET['delete']);
             }
 
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()]);
+        }
+
+        if (!$board) {
             return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
         }
 
-        $boards = $this->boardService->findAll();
+        $topics = $topicService->findByBoard($board->getId());
 
         $viewModel = new ViewModel([
-            'boards' => $boards
+            'board' => $board,
+            'topics' => $topics,
         ]);
 
-        $viewModel->setTemplate('eye4web-zf2-board-admin/board/list.phtml');
+        $viewModel->setTemplate('eye4web-zf2-board-admin/topic/list.phtml');
 
         return $viewModel;
     }
 
-    public function boardEditAction()
+    public function topicEditAction()
     {
+        $topicService = $this->topicService;
         $boardService = $this->boardService;
         $id = $this->params('id');
 
-        $board = $boardService->find($id);
+        $topic = $topicService->find($id);
 
-        if (!$board) {
-            throw new Exception\RuntimeException('Board with ID #' . $id . ' could not be found');
+        if (!$topic) {
+            throw new Exception\RuntimeException('Topic with ID #' . $id . ' could not be found');
         }
 
-        $form = $this->boardEditForm;
-        $form->bind($board);
+        $board = $boardService->find($topic->getBoard());
+
+        $form = $this->topicEditForm;
+        $form->bind($topic);
 
         $viewModel = new ViewModel([
             'form' => $form,
-            'board' => $board,
+            'topic' => $topic,
         ]);
 
-        $viewModel->setTemplate('eye4web-zf2-board-admin/board/edit.phtml');
+        $viewModel->setTemplate('eye4web-zf2-board-admin/topic/edit.phtml');
 
-        $redirectUrl = $this->url()->fromRoute('zfcadmin/zf2-board-admin/board/edit', ['id' => $board->getId()]);
+        $redirectUrl = $this->url()->fromRoute('zfcadmin/zf2-board-admin/topic/edit', ['id' => $topic->getId()]);
 
         $prg = $this->prg($redirectUrl, true);
 
@@ -101,10 +117,11 @@ class BoardAdminController extends AbstractActionController
             return $viewModel;
         }
 
-        if ($boardService->edit($prg, $board)) {
-            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
+        if ($topicService->edit($prg, $topic)) {
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()]);
         }
 
         return $viewModel;
     }
+
 }
