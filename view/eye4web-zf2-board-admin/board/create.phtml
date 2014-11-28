@@ -1,0 +1,14 @@
+<?php
+/** @var \Eye4web\Zf2BoardAdmin\Form\Board\CreateForm $form */
+$form = $this->form;
+?>
+<h1><?= $this->translate('Create board') ?></h1>
+
+<?=$this->form()->openTag($form)?>
+<?=$this->formRow($form->get('name'))?><br />
+<?=$this->formRow($form->get('autogenerate_slug'))?><br />
+<div class="slug-field">
+    <?=$this->formRow($form->get('slug'))?><br />
+</div>
+<?=$this->formButton($form->get('submit')->setLabel('Create'))?>
+<?=$this->form()->closeTag($form)?>

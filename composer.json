@@ -12,6 +12,10 @@
     "homepage": "https://github.com/Eye4web/Eye4webZf2BoardAdmin",
     "authors": [
         {
+            "name": "Daniel Strøm",
+            "email": "ds@eye4web.dk"
+        },
+        {
             "name": "Nikolaj Løvenhardt Petersen",
             "email": "np@eye4web.dk"
         }
@@ -25,7 +29,8 @@
         "php": ">=5.4",
         "zendframework/zendframework": "~2.3",
         "eye4web/eye4web-zf2-board": "9999999-dev",
-        "zf-commons/zfc-admin": "0.2.*"
+        "zf-commons/zfc-admin": "0.2.*",
+        "cocur/slugify": "0.10.*"
     },
     "autoload": {
         "psr-0": {

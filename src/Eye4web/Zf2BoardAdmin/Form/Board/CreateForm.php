@@ -26,9 +26,9 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Stdlib\Hydrator\ClassMethods;
 
-class EditForm extends Form implements InputFilterProviderInterface
+class CreateForm extends Form implements InputFilterProviderInterface
 {
-    public function __construct(BoardInterface $object, $name = 'edit-board')
+    public function __construct(BoardInterface $object, $name = 'create-board')
     {
         parent::__construct($name);
 
@@ -45,6 +45,17 @@ class EditForm extends Form implements InputFilterProviderInterface
                 'class' => 'small form-control',
                 'placeholder' => 'Board name'
             ],
+        ]);
+
+        $this->add([
+            'name' => 'autogenerate_slug',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => [
+                'label' => 'Autogenerate slug?',
+                'use_hidden_element' => true,
+                'checked_value' => 'true',
+                'unchecked_value' => 'false'
+            ]
         ]);
 
         $this->add([
@@ -96,7 +107,7 @@ class EditForm extends Form implements InputFilterProviderInterface
             ],
             [
                 'name' => 'slug',
-                'required' => true,
+                'required' => false,
                 'filters'  => [
                     [
                         'name' => 'StripTags'

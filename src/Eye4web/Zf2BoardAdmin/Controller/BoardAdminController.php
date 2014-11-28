@@ -19,30 +19,38 @@
 
 namespace Eye4web\Zf2BoardAdmin\Controller;
 
-use Eye4web\Zf2Board\Service\AuthorService;
+use Eye4web\Zf2BoardAdmin\Service\BoardAdminService;
 use Eye4web\Zf2Board\Service\BoardService;
-use Eye4web\Zf2Board\Service\PostService;
-use Eye4web\Zf2Board\Service\TopicService;
 use Eye4web\Zf2BoardAdmin\Exception;
 use Eye4web\Zf2BoardAdmin\Form\Board\EditForm as BoardEditForm;
-use Eye4web\Zf2BoardAdmin\Form\Topic\EditForm as TopicEditForm;
-use Eye4web\Zf2Board\Form\Post\EditForm as PostEditForm;
+use Eye4web\Zf2BoardAdmin\Form\Board\CreateForm as BoardCreateForm;
+use Zend\Http\PhpEnvironment\Response;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class BoardAdminController extends AbstractActionController
 {
+    /** @var BoardAdminService */
+    protected $boardAdminService;
+
     /** @var BoardService */
     protected $boardService;
 
     /** @var BoardEditForm */
     protected $boardEditForm;
 
+    /** @var BoardCreateForm */
+    protected $boardCreateForm;
+
     public function __construct(BoardService $boardService,
+                                BoardAdminService $boardAdminService,
+                                BoardCreateForm $boardCreateForm,
                                 BoardEditForm $boardEditForm)
     {
         $this->boardService = $boardService;
+        $this->boardAdminService = $boardAdminService;
         $this->boardEditForm = $boardEditForm;
+        $this->boardCreateForm = $boardCreateForm;
     }
 
     public function boardListAction()
@@ -66,6 +74,32 @@ class BoardAdminController extends AbstractActionController
         ]);
 
         $viewModel->setTemplate('eye4web-zf2-board-admin/board/list.phtml');
+
+        return $viewModel;
+    }
+
+    public function boardCreateAction()
+    {
+        $form = $this->boardCreateForm;
+
+        $viewModel = new ViewModel([
+            'form' => $form,
+        ]);
+        $viewModel->setTemplate('eye4web-zf2-board-admin/board/create.phtml');
+
+        $redirectUrl = $this->url()->fromRoute('zfcadmin/zf2-board-admin/board/create');
+
+        $prg = $this->prg($redirectUrl, true);
+
+        if ($prg instanceof Response) {
+            return $prg;
+        } elseif ($prg === false) {
+            return $viewModel;
+        }
+
+        if ($this->boardAdminService->create($prg)) {
+            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
+        }
 
         return $viewModel;
     }
@@ -95,13 +129,13 @@ class BoardAdminController extends AbstractActionController
 
         $prg = $this->prg($redirectUrl, true);
 
-        if ($prg instanceof \Zend\Http\PhpEnvironment\Response) {
+        if ($prg instanceof Response) {
             return $prg;
         } elseif ($prg === false) {
             return $viewModel;
         }
 
-        if ($boardService->edit($prg, $board)) {
+        if ($this->boardAdminService->edit($prg, $board)) {
             return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
         }
 

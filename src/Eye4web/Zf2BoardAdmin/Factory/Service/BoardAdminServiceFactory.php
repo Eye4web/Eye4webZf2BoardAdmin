@@ -17,40 +17,36 @@
  * and is licensed under the MIT license.
  */
 
-namespace Eye4web\Zf2BoardAdmin\Factory\Controller;
+namespace Eye4web\Zf2BoardAdmin\Factory\Service;
 
-use Eye4web\Zf2BoardAdmin\Controller\BoardAdminController;
 use Eye4web\Zf2BoardAdmin\Service\BoardAdminService;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class BoardAdminControllerFactory implements FactoryInterface
+class BoardAdminServiceFactory implements FactoryInterface
 {
     /**
-     * Create controller
+     * Create service
      *
-     * @param ServiceLocatorInterface $controllerManager
-     * @return BoardAdminController
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return BoardAdminService
      */
-    public function createService(ServiceLocatorInterface $controllerManager)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /** @var ServiceLocatorInterface $serviceLocator */
-        $serviceLocator = $controllerManager->getServiceLocator();
+        /** @var \Eye4web\Zf2BoardAdmin\Options\ModuleOptions $options */
+        $options = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Options\ModuleOptions');
 
-        /** @var BoardAdminService $boardService */
-        $boardAdminService = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Service\BoardAdminService');
+        /** @var \Eye4web\Zf2BoardAdmin\Mapper\BoardAdminMapperInterface $mapper */
+        $mapper = $serviceLocator->get($options->getBoardAdminMapper());
 
-        /** @var BoardService $boardService */
-        $boardService = $serviceLocator->get('Eye4web\Zf2Board\Service\BoardService');
-
-        /** @var \Eye4web\Zf2BoardAdmin\Form\Board\EditForm $boardEditForm */
-        $boardEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Board\EditForm');
-
-        /** @var \Eye4web\Zf2BoardAdmin\Form\Board\CreateForm $boardCreateForm */
         $boardCreateForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Board\CreateForm');
 
-        $controller = new BoardAdminController($boardService, $boardAdminService, $boardCreateForm, $boardEditForm);
+        $boardEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Board\EditForm');
 
-        return $controller;
+        $slugService = new \Cocur\Slugify\Slugify;
+
+        $service = new BoardAdminService($mapper, $boardCreateForm, $boardEditForm, $slugService);
+
+        return $service;
     }
 }

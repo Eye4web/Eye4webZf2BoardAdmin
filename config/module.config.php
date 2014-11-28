@@ -64,6 +64,16 @@ return [
                                                 'action'     => 'boardEdit',
                                             ],
                                         ],
+                                    ],
+                                    'create' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                                        'options' => [
+                                            'route' => '/create',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\BoardAdminController',
+                                                'action'     => 'boardCreate',
+                                            ],
+                                        ],
                                     ]
                                 ],
                             ],
