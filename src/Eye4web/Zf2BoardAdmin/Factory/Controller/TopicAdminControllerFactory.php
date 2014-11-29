@@ -42,10 +42,13 @@ class TopicAdminControllerFactory implements FactoryInterface
         /** @var \Eye4web\Zf2Board\Service\TopicService $topicService */
         $topicService = $serviceLocator->get('Eye4web\Zf2Board\Service\TopicService');
 
+        /** @var \Eye4web\Zf2BoardAdmin\Service\TopicAdminService $topicAdminService */
+        $topicAdminService = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Service\TopicAdminService');
+
         /** @var \Eye4web\Zf2BoardAdmin\Form\Topic\EditForm $topicEditForm */
         $topicEditForm = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Form\Topic\EditForm');
 
-        $controller = new TopicAdminController($boardService, $topicService, $topicEditForm);
+        $controller = new TopicAdminController($boardService, $topicService, $topicAdminService, $topicEditForm);
 
         return $controller;
     }

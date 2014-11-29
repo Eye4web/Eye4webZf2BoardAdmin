@@ -19,14 +19,11 @@
 
 namespace Eye4web\Zf2BoardAdmin\Controller;
 
-use Eye4web\Zf2Board\Service\AuthorService;
 use Eye4web\Zf2Board\Service\BoardService;
-use Eye4web\Zf2Board\Service\PostService;
 use Eye4web\Zf2Board\Service\TopicService;
+use Eye4web\Zf2BoardAdmin\Service\TopicAdminService;
 use Eye4web\Zf2BoardAdmin\Exception;
-use Eye4web\Zf2BoardAdmin\Form\Board\EditForm as BoardEditForm;
 use Eye4web\Zf2BoardAdmin\Form\Topic\EditForm as TopicEditForm;
-use Eye4web\Zf2Board\Form\Post\EditForm as PostEditForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -38,16 +35,33 @@ class TopicAdminController extends AbstractActionController
     /** @var TopicService */
     protected $topicService;
 
+    /** @var TopicAdminService */
+    protected $topicAdminService;
+
     /** @var TopicEditForm */
     protected $topicEditForm;
 
     public function __construct(BoardService $boardService,
                                 TopicService $topicService,
+                                TopicAdminService $topicAdminService,
                                 TopicEditForm $topicEditForm)
     {
         $this->boardService = $boardService;
         $this->topicService = $topicService;
+        $this->topicAdminService = $topicAdminService;
         $this->topicEditForm = $topicEditForm;
+    }
+
+    public function topicDeleteAction()
+    {
+        $topic = $this->topicService->find($this->params("id"));
+        $boardId = $topic->getid();
+
+        if ($topic) {
+            $this->topicAdminService->delete($this->params("id"));
+        }
+
+        return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $boardId]);
     }
 
     public function topicListAction()
@@ -56,16 +70,6 @@ class TopicAdminController extends AbstractActionController
         $topicService = $this->topicService;
 
         $board = $boardService->find($this->params('board'));
-
-        if (isset($_GET['delete'])) {
-            $topic = $topicService->find($_GET['delete']);
-
-            if ($topic) {
-                $topicService->delete($_GET['delete']);
-            }
-
-            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()]);
-        }
 
         if (!$board) {
             return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');

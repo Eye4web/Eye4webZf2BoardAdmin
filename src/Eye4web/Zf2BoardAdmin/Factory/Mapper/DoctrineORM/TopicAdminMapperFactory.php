@@ -17,24 +17,31 @@
  * and is licensed under the MIT license.
  */
 
-namespace Eye4web\Zf2BoardAdmin\Options;
+namespace Eye4web\Zf2BoardAdmin\Factory\Mapper\DoctrineORM;
 
-use Zend\Stdlib\AbstractOptions;
+use Eye4web\Zf2Board\Service\TopicService;
+use Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM\TopicAdminMapper;
+use Zend\ServiceManager\FactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-interface ModuleOptionsInterface
+class TopicAdminMapperFactory implements FactoryInterface
 {
     /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\BoardAdminMapperInterface
+     * Create mapper
+     *
+     * @param ServiceLocatorInterface $serviceManager
+     * @return TopicAdminMapper
      */
-    public function getBoardAdminMapper();
+    public function createService(ServiceLocatorInterface $serviceManager)
+    {
+        /** @var \Doctrine\ORM\EntityManager $objectManager */
+        $objectManager = $serviceManager->get('Doctrine\ORM\EntityManager');
 
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\TopicAdminMapperInterface
-     */
-    public function getTopicAdminMapper();
+        /** @var TopicService $boardService */
+        $topicService = $serviceManager->get('Eye4web\Zf2Board\Service\TopicService');
 
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\PostAdminMapperInterface
-     */
-    public function getPostAdminMapper();
+        $mapper = new TopicAdminMapper($objectManager, $topicService);
+
+        return $mapper;
+    }
 }

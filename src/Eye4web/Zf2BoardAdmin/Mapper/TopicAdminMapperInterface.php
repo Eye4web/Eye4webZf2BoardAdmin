@@ -17,24 +17,14 @@
  * and is licensed under the MIT license.
  */
 
-namespace Eye4web\Zf2BoardAdmin\Options;
+namespace Eye4web\Zf2BoardAdmin\Mapper;
 
-use Zend\Stdlib\AbstractOptions;
-
-interface ModuleOptionsInterface
+interface TopicAdminMapperInterface
 {
     /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\BoardAdminMapperInterface
+     * @param int $id
+     * @return boolean
+     * @throws \Exception
      */
-    public function getBoardAdminMapper();
-
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\TopicAdminMapperInterface
-     */
-    public function getTopicAdminMapper();
-
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\PostAdminMapperInterface
-     */
-    public function getPostAdminMapper();
+    public function delete($id);
 }

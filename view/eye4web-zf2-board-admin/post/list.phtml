@@ -29,7 +29,7 @@ $topic = $this->topic;
             <td><?=$post->getCreated()->format('Y/m/d H:i')?></td>
             <td style="text-align: right;">
                 <a href="<?=$this->url('zfcadmin/zf2-board-admin/post/edit', ['id' => $post->getId()])?>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> <?=$this->translate('Edit')?></a>
-                <a href="?delete=<?=$post->getId()?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> <?=$this->translate('Delete')?></a>
+                <a href="<?= $this->url('zfcadmin/zf2-board-admin/post/delete', ['id' => $post->getId()]) ?>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> <?=$this->translate('Delete')?></a>
             </td>
         </tr>
     <?php } ?>

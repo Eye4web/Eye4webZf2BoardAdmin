@@ -113,6 +113,16 @@ return [
                                                 'action'     => 'topicEdit',
                                             ],
                                         ],
+                                    ],
+                                    'delete' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/delete/:id',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\TopicAdminController',
+                                                'action'     => 'topicDelete',
+                                            ],
+                                        ],
                                     ]
                                 ],
                             ],
@@ -140,6 +150,16 @@ return [
                                             'defaults' => [
                                                 'controller' => 'Eye4web\Zf2BoardAdmin\Controller\PostAdminController',
                                                 'action'     => 'postEdit',
+                                            ],
+                                        ],
+                                    ],
+                                    'delete' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/delete/:id',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\PostAdminController',
+                                                'action'     => 'postDelete',
                                             ],
                                         ],
                                     ]

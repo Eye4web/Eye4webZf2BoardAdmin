@@ -17,24 +17,23 @@
  * and is licensed under the MIT license.
  */
 
-namespace Eye4web\Zf2BoardAdmin\Options;
+namespace Eye4web\Zf2BoardAdmin\Service;
 
-use Zend\Stdlib\AbstractOptions;
+use Eye4web\Zf2BoardAdmin\Mapper\TopicAdminMapperInterface;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerAwareTrait;
 
-interface ModuleOptionsInterface
+class TopicAdminService implements TopicAdminServiceInterface
 {
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\BoardAdminMapperInterface
-     */
-    public function getBoardAdminMapper();
+    protected $topicAdminMapper;
 
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\TopicAdminMapperInterface
-     */
-    public function getTopicAdminMapper();
+    public function __construct(TopicAdminMapperInterface $topicAdminMapper)
+    {
+        $this->topicAdminMapper = $topicAdminMapper;
+    }
 
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\PostAdminMapperInterface
-     */
-    public function getPostAdminMapper();
+    function delete($id)
+    {
+        $this->topicAdminMapper->delete($id);
+    }
 }

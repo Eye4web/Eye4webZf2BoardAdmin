@@ -19,11 +19,11 @@
 
 namespace Eye4web\Zf2BoardAdmin\Factory\Controller;
 
-use Eye4web\Zf2BoardAdmin\Controller\BoardAdminController;
+use Eye4web\Zf2BoardAdmin\Controller\PostAdminController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class BoardAdminControllerFactory implements FactoryInterface
+class PostAdminControllerFactory implements FactoryInterface
 {
     /**
      * Create controller
@@ -45,13 +45,16 @@ class BoardAdminControllerFactory implements FactoryInterface
         /** @var \Eye4web\Zf2Board\Service\PostService $postService */
         $postService = $serviceLocator->get('Eye4web\Zf2Board\Service\PostService');
 
+        /** @var \Eye4web\Zf2BoardAdmin\Service\PostAdminService $postAdminService */
+        $postAdminService = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Service\PostAdminService');
+
         /** @var \Eye4web\Zf2Board\Service\AuthorService $authorService */
         $authorService = $serviceLocator->get('Eye4web\Zf2Board\Service\AuthorService');
 
         /** @var \Eye4web\Zf2Board\Form\Post\EditForm $postEditForm */
         $postEditForm = $serviceLocator->get('Eye4web\Zf2Board\Form\Post\EditForm');
 
-        $controller = new BoardAdminController($boardService, $topicService, $postService, $authorService, $postEditForm);
+        $controller = new PostAdminController($boardService, $topicService, $postService, $postAdminService, $authorService, $postEditForm);
 
         return $controller;
     }

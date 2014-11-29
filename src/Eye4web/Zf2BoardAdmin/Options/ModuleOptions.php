@@ -28,6 +28,13 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     /** @var string */
     protected $boardAdminMapper = 'Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM\BoardAdminMapper';
 
+    /** @var string */
+    protected $topicAdminMapper = 'Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM\TopicAdminMapper';
+
+    /** @var string */
+    protected $postAdminMapper = 'Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM\PostAdminMapper';
+
+
     /**
      * @return string
      */
@@ -43,5 +50,39 @@ class ModuleOptions extends AbstractOptions implements ModuleOptionsInterface
     {
         $this->boardAdminMapper = $boardAdminMapper;
     }
+
+    /**
+     * @return string
+     */
+    public function getPostAdminMapper()
+    {
+        return $this->postAdminMapper;
+    }
+
+    /**
+     * @param string $postAdminMapper
+     */
+    public function setPostAdminMapper($postAdminMapper)
+    {
+        $this->postAdminMapper = $postAdminMapper;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTopicAdminMapper()
+    {
+        return $this->topicAdminMapper;
+    }
+
+    /**
+     * @param string $topicAdminMapper
+     */
+    public function setTopicAdminMapper($topicAdminMapper)
+    {
+        $this->topicAdminMapper = $topicAdminMapper;
+    }
+
+
 
 }

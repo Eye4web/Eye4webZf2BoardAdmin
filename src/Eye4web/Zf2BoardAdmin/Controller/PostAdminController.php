@@ -22,10 +22,9 @@ namespace Eye4web\Zf2BoardAdmin\Controller;
 use Eye4web\Zf2Board\Service\AuthorService;
 use Eye4web\Zf2Board\Service\BoardService;
 use Eye4web\Zf2Board\Service\PostService;
+use Eye4web\Zf2BoardAdmin\Service\PostAdminService;
 use Eye4web\Zf2Board\Service\TopicService;
 use Eye4web\Zf2BoardAdmin\Exception;
-use Eye4web\Zf2BoardAdmin\Form\Board\EditForm as BoardEditForm;
-use Eye4web\Zf2BoardAdmin\Form\Topic\EditForm as TopicEditForm;
 use Eye4web\Zf2Board\Form\Post\EditForm as PostEditForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -41,6 +40,9 @@ class PostAdminController extends AbstractActionController
     /** @var PostService */
     protected $postService;
 
+    /** @var PostAdminService */
+    protected $postAdminService;
+
     /** @var AuthorService */
     protected $authorService;
 
@@ -50,14 +52,28 @@ class PostAdminController extends AbstractActionController
     public function __construct(BoardService $boardService,
                                 TopicService $topicService,
                                 PostService $postService,
+                                PostAdminService $postAdminService,
                                 AuthorService $authorService,
                                 PostEditForm $postEditForm)
     {
         $this->boardService = $boardService;
         $this->topicService = $topicService;
         $this->postService = $postService;
+        $this->postAdminService = $postAdminService;
         $this->authorService = $authorService;
         $this->postEditForm = $postEditForm;
+    }
+
+    public function postDeleteAction()
+    {
+        $post = $this->postService->find($this->params('id'));
+        $topicId = $post->getTopic();
+
+        if ($post) {
+            $this->postAdminService->delete($this->params('id'));
+        }
+
+        return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/post/list', ['topic' => $topicId]);
     }
 
     public function postListAction()
@@ -73,16 +89,6 @@ class PostAdminController extends AbstractActionController
         }
 
         $board = $boardService->find($topic->getBoard());
-
-        if ($this->params()->fromQuery('delete', false)) {
-            $post = $postService->find($this->params()->fromQuery('delete'));
-
-            if ($post) {
-                $postService->delete($this->params()->fromQuery('delete'));
-            }
-
-            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/post/list', ['topic' => $topic->getId()]);
-        }
 
         $posts = $postService->findByTopic($topic->getId());
 

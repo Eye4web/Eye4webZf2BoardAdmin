@@ -9,9 +9,13 @@ return [
 
         // Mappers
         'Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM\BoardAdminMapper' => 'Eye4web\Zf2BoardAdmin\Factory\Mapper\DoctrineORM\BoardAdminMapperFactory',
+        'Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM\TopicAdminMapper' => 'Eye4web\Zf2BoardAdmin\Factory\Mapper\DoctrineORM\TopicAdminMapperFactory',
+        'Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM\PostAdminMapper' => 'Eye4web\Zf2BoardAdmin\Factory\Mapper\DoctrineORM\PostAdminMapperFactory',
 
         // Services
         'Eye4web\Zf2BoardAdmin\Service\BoardAdminService' => 'Eye4web\Zf2BoardAdmin\Factory\Service\BoardAdminServiceFactory',
+        'Eye4web\Zf2BoardAdmin\Service\TopicAdminService' => 'Eye4web\Zf2BoardAdmin\Factory\Service\TopicAdminServiceFactory',
+        'Eye4web\Zf2BoardAdmin\Service\PostAdminService' => 'Eye4web\Zf2BoardAdmin\Factory\Service\PostAdminServiceFactory',
 
         // Options
         'Eye4web\Zf2BoardAdmin\Options\ModuleOptions' => 'Eye4web\Zf2BoardAdmin\Factory\Options\ModuleOptionsFactory',

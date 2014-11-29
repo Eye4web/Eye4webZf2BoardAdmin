@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -17,24 +16,12 @@
  * and is licensed under the MIT license.
  */
 
-namespace Eye4web\Zf2BoardAdmin\Options;
+namespace Eye4web\Zf2BoardAdmin\Service;
 
-use Zend\Stdlib\AbstractOptions;
+use Eye4web\Zf2Board\Entity\BoardInterface;
+use Eye4web\Zf2Board\Entity\UserInterface;
 
-interface ModuleOptionsInterface
+interface PostAdminServiceInterface
 {
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\BoardAdminMapperInterface
-     */
-    public function getBoardAdminMapper();
-
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\TopicAdminMapperInterface
-     */
-    public function getTopicAdminMapper();
-
-    /**
-     * @return \Eye4web\Zf2BoardAdmin\Mapper\PostAdminMapperInterface
-     */
-    public function getPostAdminMapper();
+    public function delete($postId);
 }
