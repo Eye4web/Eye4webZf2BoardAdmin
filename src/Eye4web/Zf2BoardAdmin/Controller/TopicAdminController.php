@@ -57,6 +57,10 @@ class TopicAdminController extends AbstractActionController
         $topic = $this->topicService->find($this->params("id"));
         $boardId = $topic->getid();
 
+        $this->getEventManager()->trigger('topic.delete', $this, [
+            'topic' => $topic,
+        ]);
+
         if ($topic) {
             $this->topicAdminService->delete($this->params("id"));
         }
@@ -70,6 +74,10 @@ class TopicAdminController extends AbstractActionController
         $topicService = $this->topicService;
 
         $board = $boardService->find($this->params('board'));
+
+        $this->getEventManager()->trigger('topic.list', $this, [
+            'board' => $board,
+        ]);
 
         if (!$board) {
             return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
@@ -94,6 +102,10 @@ class TopicAdminController extends AbstractActionController
         $id = $this->params('id');
 
         $topic = $topicService->find($id);
+
+        $this->getEventManager()->trigger('topic.edit', $this, [
+            'topic' => $topic,
+        ]);
 
         if (!$topic) {
             throw new Exception\RuntimeException('Topic with ID #' . $id . ' could not be found');
