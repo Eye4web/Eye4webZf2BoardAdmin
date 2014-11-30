@@ -28,7 +28,7 @@
     "require": {
         "php": ">=5.4",
         "zendframework/zendframework": "~2.3",
-        "eye4web/eye4web-zf2-board": "9999999-dev",
+        "eye4web/eye4web-zf2-board": "dev-master",
         "zf-commons/zfc-admin": "0.2.*",
         "cocur/slugify": "0.10.*"
     },
