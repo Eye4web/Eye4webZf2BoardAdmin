@@ -34,6 +34,10 @@ class PostAdminService implements PostAdminServiceInterface
 
     function delete($id)
     {
+        $this->getEventManager()->trigger('post.delete', $this, [
+            'id' => $id
+        ]);
+
         $this->postAdminMapper->delete($id);
     }
 }

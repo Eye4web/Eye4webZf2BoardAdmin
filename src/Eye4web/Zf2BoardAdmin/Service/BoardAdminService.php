@@ -20,15 +20,15 @@
 namespace Eye4web\Zf2BoardAdmin\Service;
 
 use Eye4web\Zf2Board\Entity\BoardInterface;
-use Eye4web\Zf2Board\Entity\UserInterface;
 use Eye4web\Zf2BoardAdmin\Mapper\BoardAdminMapperInterface;
-use Eye4web\Zf2Board\Service\BoardService;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
 use Zend\Form\FormInterface;
 
-class BoardAdminService implements BoardAdminServiceInterface
+class BoardAdminService implements BoardAdminServiceInterface, EventManagerAwareInterface
 {
+    use EventManagerAwareTrait;
+
     /** @var FormInterface */
     protected $boardCreateForm;
 
@@ -46,6 +46,10 @@ class BoardAdminService implements BoardAdminServiceInterface
 
     function delete($id)
     {
+        $this->getEventManager()->trigger('board.delete', $this, [
+            'id' => $id
+        ]);
+
         $this->boardAdminMapper->delete($id);
     }
 
@@ -70,7 +74,17 @@ class BoardAdminService implements BoardAdminServiceInterface
             $board->setSlug($slug);
         }
 
-        return $this->boardAdminMapper->create($board);
+        $this->getEventManager()->trigger('board.create.pre', $this, [
+            'board' => $board
+        ]);
+
+        $board = $this->boardAdminMapper->create($board);
+
+        $this->getEventManager()->trigger('board.create', $this, [
+            'board' => $board
+        ]);
+
+        return $board;
     }
 
     /**
@@ -92,6 +106,16 @@ class BoardAdminService implements BoardAdminServiceInterface
         /** @var BoardInterface $board */
         $board = $form->getData();
 
-        return $this->boardAdminMapper->edit($board);
+        $this->getEventManager()->trigger('board.edit.pre', $this, [
+            'board' => $board
+        ]);
+
+        $board = $this->boardAdminMapper->edit($board);
+
+        $this->getEventManager()->trigger('board.edit', $this, [
+            'board' => $board
+        ]);
+
+        return $board;
     }
 }

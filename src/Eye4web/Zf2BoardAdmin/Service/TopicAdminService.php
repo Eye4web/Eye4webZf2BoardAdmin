@@ -34,6 +34,10 @@ class TopicAdminService implements TopicAdminServiceInterface
 
     function delete($id)
     {
+        $this->getEventManager()->trigger('topic.delete', $this, [
+            'id' => $id
+        ]);
+
         $this->topicAdminMapper->delete($id);
     }
 }

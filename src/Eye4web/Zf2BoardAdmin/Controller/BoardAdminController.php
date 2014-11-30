@@ -27,9 +27,13 @@ use Eye4web\Zf2BoardAdmin\Form\Board\CreateForm as BoardCreateForm;
 use Zend\Http\PhpEnvironment\Response;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerAwareTrait;
 
-class BoardAdminController extends AbstractActionController
+class BoardAdminController extends AbstractActionController implements EventManagerAwareInterface
 {
+    use EventManagerAwareTrait;
+
     /** @var BoardAdminService */
     protected $boardAdminService;
 
@@ -57,6 +61,8 @@ class BoardAdminController extends AbstractActionController
     {
         $boards = $this->boardService->findAll();
 
+        $this->getEventManager()->trigger('board.list', $this, []);
+
         $viewModel = new ViewModel([
             'boards' => $boards
         ]);
@@ -70,6 +76,10 @@ class BoardAdminController extends AbstractActionController
     {
         $board = $this->boardService->find($this->params('id'));
 
+        $this->getEventManager()->trigger('board.delete', $this, [
+            'board' => $board,
+        ]);
+
         if ($board) {
             $this->boardAdminService->delete($this->params('id'));
         }
@@ -79,6 +89,8 @@ class BoardAdminController extends AbstractActionController
 
     public function boardCreateAction()
     {
+        $this->getEventManager()->trigger('board.create', $this, []);
+
         $form = $this->boardCreateForm;
 
         $viewModel = new ViewModel([
@@ -109,6 +121,10 @@ class BoardAdminController extends AbstractActionController
         $id = $this->params('id');
 
         $board = $boardService->find($id);
+
+        $this->getEventManager()->trigger('board.edit', $this, [
+            'board' => $board,
+        ]);
 
         if (!$board) {
             throw new Exception\RuntimeException('Board with ID #' . $id . ' could not be found');

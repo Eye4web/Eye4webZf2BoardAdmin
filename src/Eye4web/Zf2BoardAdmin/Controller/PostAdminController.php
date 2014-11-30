@@ -69,6 +69,10 @@ class PostAdminController extends AbstractActionController
         $post = $this->postService->find($this->params('id'));
         $topicId = $post->getTopic();
 
+        $this->getEventManager()->trigger('post.delete', $this, [
+            'post' => $post,
+        ]);
+
         if ($post) {
             $this->postAdminService->delete($this->params('id'));
         }
@@ -83,6 +87,10 @@ class PostAdminController extends AbstractActionController
         $postService = $this->postService;
 
         $topic = $topicService->find($this->params('topic'));
+
+        $this->getEventManager()->trigger('post.list', $this, [
+            'topic' => $topic,
+        ]);
 
         if (!$topic) {
             return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/board/list');
@@ -110,6 +118,10 @@ class PostAdminController extends AbstractActionController
         $id = $this->params('id');
 
         $post = $postService->find($id);
+
+        $this->getEventManager()->trigger('post.edit', $this, [
+            'post' => $post,
+        ]);
 
         if (!$post) {
             throw new Exception\RuntimeException('Post with ID #' . $id . ' could not be found');
