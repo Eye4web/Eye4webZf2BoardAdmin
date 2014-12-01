@@ -30,9 +30,8 @@ use Zend\View\Model\ViewModel;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
 
-class BoardAdminController extends AbstractActionController implements EventManagerAwareInterface
+class BoardAdminController extends AbstractActionController
 {
-    use EventManagerAwareTrait;
 
     /** @var BoardAdminService */
     protected $boardAdminService;
