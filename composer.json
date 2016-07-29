@@ -20,11 +20,6 @@
             "email": "np@eye4web.dk"
         }
     ],
-    "extra": {
-        "branch-alias": {
-            "dev-master": "master-dev"
-        }
-    },
     "require": {
         "php": ">=5.4",
         "zendframework/zendframework": "~2.3|~3.0",
