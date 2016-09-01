@@ -52,18 +52,6 @@ class EditForm extends Form implements InputFilterProviderInterface
         ));
 
         $this->add([
-            'name' => 'text',
-            'type'  => 'Zend\Form\Element\Textarea',
-            'options' => [
-                'label' => 'Topic',
-            ],
-            'attributes' => [
-                'class' => 'small form-control',
-                'placeholder' => 'Topic text'
-            ],
-        ]);
-
-        $this->add([
             'name' => 'submit',
             'type' => 'Zend\Form\Element\Button',
             'attributes' => [
@@ -97,25 +85,7 @@ class EditForm extends Form implements InputFilterProviderInterface
                         ],
                     ],
                 ],
-            ],
-            [
-                'name' => 'text',
-                'required' => true,
-                'validators' => [
-                    [
-                        'name'    => 'StringLength',
-                        'options' => [
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 5000,
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'name' => 'csrf',
-                'required' => true,
-            ],
+            ]
         ];
     }
 }

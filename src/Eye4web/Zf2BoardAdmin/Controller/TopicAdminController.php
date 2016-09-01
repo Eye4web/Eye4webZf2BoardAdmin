@@ -55,7 +55,8 @@ class TopicAdminController extends AbstractActionController
     public function topicDeleteAction()
     {
         $topic = $this->topicService->find($this->params("id"));
-        $boardId = $topic->getid();
+        $boardId = $topic->getBoard();
+        $board = $this->boardService->find($boardId);
 
         $this->getEventManager()->trigger('topic.delete', $this, [
             'topic' => $topic,
@@ -65,7 +66,102 @@ class TopicAdminController extends AbstractActionController
             $this->topicAdminService->delete($this->params("id"));
         }
 
-        return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $boardId]);
+        $response = $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $boardId]);
+        $this->getEventManager()->trigger('delete.post', $this, [
+            'response' => $response,
+            'boardId' => $board->getId(),
+            'boardSlug' => $board->getSlug()
+        ]);
+
+        return $response;
+    }
+
+    public function topicLockAction()
+    {
+        $topic = $this->topicService->find($this->params("id"));
+        $boardId = $topic->getid();
+
+        $this->getEventManager()->trigger('topic.lock', $this, [
+            'topic' => $topic,
+        ]);
+
+        if ($topic) {
+            $this->topicAdminService->lock($this->params("id"));
+        }
+
+        $response = $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $boardId]);
+        $this->getEventManager()->trigger('lock.post', $this, [
+            'response' => $response,
+            'topicId' => $topic->getId(),
+            'topicSlug' => $topic->getSlug()
+        ]);
+        return $response;
+    }
+
+    public function topicUnlockAction()
+    {
+        $topic = $this->topicService->find($this->params("id"));
+        $boardId = $topic->getid();
+
+        $this->getEventManager()->trigger('topic.unlock', $this, [
+            'topic' => $topic,
+        ]);
+
+        if ($topic) {
+            $this->topicAdminService->unlock($this->params("id"));
+        }
+
+        $response = $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $boardId]);
+        $this->getEventManager()->trigger('unlock.post', $this, [
+            'response' => $response,
+            'topicId' => $topic->getId(),
+            'topicSlug' => $topic->getSlug()
+        ]);
+        return $response;
+    }
+
+    public function topicPinAction()
+    {
+        $topic = $this->topicService->find($this->params("id"));
+        $boardId = $topic->getid();
+
+        $this->getEventManager()->trigger('topic.pin', $this, [
+            'topic' => $topic,
+        ]);
+
+        if ($topic) {
+            $this->topicAdminService->pin($this->params("id"));
+        }
+
+        $response = $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $boardId]);
+        $this->getEventManager()->trigger('pin.post', $this, [
+            'response' => $response,
+            'topicId' => $topic->getId(),
+            'topicSlug' => $topic->getSlug()
+        ]);
+        return $response;
+    }
+
+    public function topicUnpinAction()
+    {
+        $topic = $this->topicService->find($this->params("id"));
+        $boardId = $topic->getid();
+
+        $this->getEventManager()->trigger('topic.unpin', $this, [
+            'topic' => $topic,
+        ]);
+
+        if ($topic) {
+            $this->topicAdminService->unpin($this->params("id"));
+        }
+
+        $response = $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $boardId]);
+        $this->getEventManager()->trigger('unpin.post', $this, [
+            'response' => $response,
+            'topicId' => $topic->getId(),
+            'topicSlug' => $topic->getSlug()
+        ]);
+        return $response;
     }
 
     public function topicListAction()
@@ -133,8 +229,19 @@ class TopicAdminController extends AbstractActionController
             return $viewModel;
         }
 
-        if ($topicService->edit($prg, $topic)) {
-            return $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()]);
+        $form->setData($prg);
+        
+        if ($form->isValid()) {
+            $data = $form->getData();
+            $this->topicAdminService->edit($topic);
+            
+            $response = $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()]);
+            $this->getEventManager()->trigger('edit.post', $this, [
+                'response' => $response,
+                'topicId' => $topic->getId(),
+                'topicSlug' => $topic->getSlug()
+            ]);
+            return $response;
         }
 
         return $viewModel;

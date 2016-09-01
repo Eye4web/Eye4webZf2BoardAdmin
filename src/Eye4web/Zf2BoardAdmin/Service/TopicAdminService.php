@@ -23,13 +23,23 @@ use Eye4web\Zf2BoardAdmin\Mapper\TopicAdminMapperInterface;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
 
-class TopicAdminService implements TopicAdminServiceInterface
+class TopicAdminService implements TopicAdminServiceInterface, EventManagerAwareInterface
 {
+    use EventManagerAwareTrait;
+    
     protected $topicAdminMapper;
 
     public function __construct(TopicAdminMapperInterface $topicAdminMapper)
     {
         $this->topicAdminMapper = $topicAdminMapper;
+    }
+
+    public function edit($topic)
+    {
+        $this->getEventManager()->trigger('topic.edit', $this, [
+            'topic' => $topic
+        ]);
+        $this->topicAdminMapper->edit($topic);
     }
 
     function delete($id)
@@ -39,5 +49,41 @@ class TopicAdminService implements TopicAdminServiceInterface
         ]);
 
         $this->topicAdminMapper->delete($id);
+    }
+
+    function lock($id)
+    {
+        $this->getEventManager()->trigger('topic.lock', $this, [
+            'id' => $id
+        ]);
+
+        $this->topicAdminMapper->lock($id);
+    }
+
+    function unlock($id)
+    {
+        $this->getEventManager()->trigger('topic.unlock', $this, [
+            'id' => $id
+        ]);
+
+        $this->topicAdminMapper->unlock($id);
+    }
+
+    function pin($id)
+    {
+        $this->getEventManager()->trigger('topic.pin', $this, [
+            'id' => $id
+        ]);
+
+        $this->topicAdminMapper->pin($id);
+    }
+
+    function unpin($id)
+    {
+        $this->getEventManager()->trigger('topic.unpin', $this, [
+            'id' => $id
+        ]);
+
+        $this->topicAdminMapper->unpin($id);
     }
 }

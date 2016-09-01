@@ -27,4 +27,8 @@ interface TopicAdminMapperInterface
      * @throws \Exception
      */
     public function delete($id);
+    public function lock($topicId);
+    public function unlock($topicId);
+    public function pin($topicId);
+    public function unpin($topicId);
 }

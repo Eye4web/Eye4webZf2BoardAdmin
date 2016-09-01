@@ -123,6 +123,46 @@ return [
                                                 'action'     => 'topicDelete',
                                             ],
                                         ],
+                                    ],
+                                    'lock' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/lock/:id',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\TopicAdminController',
+                                                'action'     => 'topicLock',
+                                            ],
+                                        ],
+                                    ],
+                                    'unlock' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/unlock/:id',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\TopicAdminController',
+                                                'action'     => 'topicUnlock',
+                                            ],
+                                        ],
+                                    ],
+                                    'pin' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/pin/:id',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\TopicAdminController',
+                                                'action'     => 'topicPin',
+                                            ],
+                                        ],
+                                    ],
+                                    'unpin' => [
+                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'options' => [
+                                            'route' => '/unpin/:id',
+                                            'defaults' => [
+                                                'controller' => 'Eye4web\Zf2BoardAdmin\Controller\TopicAdminController',
+                                                'action'     => 'topicUnpin',
+                                            ],
+                                        ],
                                     ]
                                 ],
                             ],

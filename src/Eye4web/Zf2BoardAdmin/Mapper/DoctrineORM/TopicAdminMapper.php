@@ -21,6 +21,7 @@ namespace Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
+use Eye4web\Zf2Board\Entity\Topic;
 use Eye4web\Zf2Board\Service\TopicService;
 use Eye4web\Zf2BoardAdmin\Mapper\TopicAdminMapperInterface;
 
@@ -32,6 +33,11 @@ class TopicAdminMapper implements TopicAdminMapperInterface
     /** @var TopicService */
     protected $topicService;
 
+    /**
+     * TopicAdminMapper constructor.
+     * @param ObjectManager $objectManager
+     * @param TopicService $topicService
+     */
     public function __construct(
         ObjectManager $objectManager,
         TopicService $topicService
@@ -54,6 +60,92 @@ class TopicAdminMapper implements TopicAdminMapperInterface
         }
 
         $this->objectManager->remove($topic);
+        $this->objectManager->flush();
+
+        return true;
+    }
+
+    /**
+     * @param $data
+     * @param Topic $topic
+     */
+    public function edit(Topic $topic)
+    {
+        $this->objectManager->persist($topic);
+        $this->objectManager->flush();
+    }
+
+    /**
+     * @param $topicId
+     * @return bool
+     * @throws \Exception
+     */
+    public function lock($topicId)
+    {
+        $topic = $this->topicService->find($topicId);
+
+        if (!$topic) {
+            throw new \Exception('The topic does not exist');
+        }
+
+        $topic->setLocked(true);
+        $this->objectManager->flush();
+
+        return true;
+    }
+
+    /**
+     * @param $topicId
+     * @return bool
+     * @throws \Exception
+     */
+    public function unlock($topicId)
+    {
+        $topic = $this->topicService->find($topicId);
+
+        if (!$topic) {
+            throw new \Exception('The topic does not exist');
+        }
+
+        $topic->setLocked(false);
+        $this->objectManager->flush();
+
+        return true;
+    }
+
+    /**
+     * @param $topicId
+     * @return bool
+     * @throws \Exception
+     */
+    public function pin($topicId)
+    {
+        $topic = $this->topicService->find($topicId);
+
+        if (!$topic) {
+            throw new \Exception('The topic does not exist');
+        }
+
+        $topic->setPinned(true);
+        $this->objectManager->flush();
+
+        return true;
+    }
+
+    /**
+     * @param $topicId
+     * @return bool
+     * @throws \Exception
+     */
+    public function unpin($topicId)
+    {
+        $topic = $this->topicService->find($topicId);
+
+        if (!$topic) {
+            throw new \Exception('The topic does not exist');
+        }
+
+        $topic->setPinned(false);
         $this->objectManager->flush();
 
         return true;

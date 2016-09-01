@@ -21,4 +21,8 @@ namespace Eye4web\Zf2BoardAdmin\Service;
 interface TopicAdminServiceInterface
 {
     public function delete($topicId);
+    public function lock($topicId);
+    public function unlock($topicId);
+    public function pin($topicId);
+    public function unpin($topicId);
 }
