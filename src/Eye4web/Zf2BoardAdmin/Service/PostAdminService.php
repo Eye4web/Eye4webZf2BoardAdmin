@@ -23,8 +23,10 @@ use Eye4web\Zf2BoardAdmin\Mapper\PostAdminMapperInterface;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerAwareTrait;
 
-class PostAdminService implements PostAdminServiceInterface
+class PostAdminService implements PostAdminServiceInterface, EventManagerAwareInterface
 {
+    use EventManagerAwareTrait;
+
     protected $postAdminMapper;
 
     public function __construct(PostAdminMapperInterface $postAdminMapper)
@@ -32,7 +34,7 @@ class PostAdminService implements PostAdminServiceInterface
         $this->postAdminMapper = $postAdminMapper;
     }
 
-    function delete($id)
+    public function delete($id)
     {
         $this->getEventManager()->trigger('post.delete', $this, [
             'id' => $id
