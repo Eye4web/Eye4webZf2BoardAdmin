@@ -119,18 +119,19 @@ class PostAdminController extends AbstractActionController
 
         $post = $postService->find($id);
 
+        $topic = $topicService->find($post->getTopic());
+
+        $form = $this->postEditForm;
+        $form->bind($post);
+
         $this->getEventManager()->trigger('post.edit', $this, [
             'post' => $post,
+            'form' => $form,
         ]);
 
         if (!$post) {
             throw new Exception\RuntimeException('Post with ID #' . $id . ' could not be found');
         }
-
-        $topic = $topicService->find($post->getTopic());
-
-        $form = $this->postEditForm;
-        $form->bind($post);
 
         $viewModel = new ViewModel([
             'form' => $form,

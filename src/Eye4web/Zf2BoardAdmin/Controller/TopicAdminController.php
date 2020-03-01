@@ -55,6 +55,7 @@ class TopicAdminController extends AbstractActionController
     public function topicDeleteAction()
     {
         $topic = $this->topicService->find($this->params("id"));
+        $topicId = $topic->getId();
         $boardId = $topic->getBoard();
         $board = $this->boardService->find($boardId);
 
@@ -69,6 +70,7 @@ class TopicAdminController extends AbstractActionController
         $response = $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $boardId]);
         $this->getEventManager()->trigger('delete.post', $this, [
             'response' => $response,
+            'topicId' => $topicId,
             'boardId' => $board->getId(),
             'boardSlug' => $board->getSlug()
         ]);
@@ -198,19 +200,22 @@ class TopicAdminController extends AbstractActionController
         $id = $this->params('id');
 
         $topic = $topicService->find($id);
-
-        $this->getEventManager()->trigger('topic.edit', $this, [
-            'topic' => $topic,
-        ]);
-
-        if (!$topic) {
-            throw new Exception\RuntimeException('Topic with ID #' . $id . ' could not be found');
-        }
+        $oldTopic = clone $topic;
 
         $board = $boardService->find($topic->getBoard());
 
         $form = $this->topicEditForm;
         $form->bind($topic);
+
+        $this->getEventManager()->trigger('topic.edit', $this, [
+            'topic' => $topic,
+            'board' => $board,
+            'form' => $form,
+        ]);
+
+        if (!$topic) {
+            throw new Exception\RuntimeException('Topic with ID #' . $id . ' could not be found');
+        }
 
         $viewModel = new ViewModel([
             'form' => $form,
@@ -233,11 +238,14 @@ class TopicAdminController extends AbstractActionController
         
         if ($form->isValid()) {
             $data = $form->getData();
+
             $this->topicAdminService->edit($topic);
             
             $response = $this->redirect()->toRoute('zfcadmin/zf2-board-admin/topic/list', ['board' => $board->getId()]);
             $this->getEventManager()->trigger('edit.post', $this, [
                 'response' => $response,
+                'topic' => $topic,
+                'oldTopic' => $oldTopic,
                 'topicId' => $topic->getId(),
                 'topicSlug' => $topic->getSlug()
             ]);

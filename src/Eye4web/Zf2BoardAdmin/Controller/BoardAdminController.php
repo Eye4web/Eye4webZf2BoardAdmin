@@ -121,16 +121,17 @@ class BoardAdminController extends AbstractActionController
 
         $board = $boardService->find($id);
 
+        $form = $this->boardEditForm;
+        $form->bind($board);
+
         $this->getEventManager()->trigger('board.edit', $this, [
             'board' => $board,
+            'form' => $form,
         ]);
 
         if (!$board) {
             throw new Exception\RuntimeException('Board with ID #' . $id . ' could not be found');
         }
-
-        $form = $this->boardEditForm;
-        $form->bind($board);
 
         $viewModel = new ViewModel([
             'form' => $form,
