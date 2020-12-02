@@ -24,7 +24,7 @@
         "php": ">=5.4",
         "zendframework/zend-mvc": "^3.0",
         "eye4web/eye4web-zf2-board": "dev-zf3",
-        "zf-commons/zfc-admin": "0.2.*",
+        "zf-commons/zfc-admin": "dev-zf3",
         "cocur/slugify": "0.10.*"
     },
     "autoload": {
@@ -41,5 +41,12 @@
         "squizlabs/php_codesniffer" : "1.5.*",
         "zendframework/zend-captcha" : "~2.1",
         "codeclimate/php-test-reporter": "dev-master"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/samsonasik/ZfcAdmin",
+            "no-api": true
+        }
+    ]
 }
