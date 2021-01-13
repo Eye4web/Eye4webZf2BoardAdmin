@@ -24,7 +24,7 @@ use Eye4web\Zf2BoardAdmin\Mapper\DoctrineORM\PostAdminMapper;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class PostAdminMapperFactory implements FactoryInterface
+class PostAdminMapperFactory implements \Zend\ServiceManager\Factory\FactoryInterface
 {
     /**
      * Create mapper
@@ -32,7 +32,7 @@ class PostAdminMapperFactory implements FactoryInterface
      * @param ServiceLocatorInterface $serviceManager
      * @return PostAdminMapper
      */
-    public function createService(ServiceLocatorInterface $serviceManager)
+    public function __invoke(\Interop\Container\ContainerInterface $serviceManager, $requestedName, array $options = null)
     {
         /** @var \Doctrine\ORM\EntityManager $objectManager */
         $objectManager = $serviceManager->get('Doctrine\ORM\EntityManager');

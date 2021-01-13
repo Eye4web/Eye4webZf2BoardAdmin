@@ -27,7 +27,7 @@ use Eye4web\Zf2BoardAdmin\Options\ModuleOptionsInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class BoardAdminMapperFactory implements FactoryInterface
+class BoardAdminMapperFactory implements \Zend\ServiceManager\Factory\FactoryInterface
 {
     /**
      * Create mapper
@@ -35,7 +35,7 @@ class BoardAdminMapperFactory implements FactoryInterface
      * @param ServiceLocatorInterface $serviceManager
      * @return BoardAdminMapper
      */
-    public function createService(ServiceLocatorInterface $serviceManager)
+    public function __invoke(\Interop\Container\ContainerInterface $serviceManager, $requestedName, array $options = null)
     {
         /** @var \Doctrine\ORM\EntityManager $objectManager */
         $objectManager = $serviceManager->get('Doctrine\ORM\EntityManager');

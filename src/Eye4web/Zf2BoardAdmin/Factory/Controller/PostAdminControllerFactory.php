@@ -23,7 +23,7 @@ use Eye4web\Zf2BoardAdmin\Controller\PostAdminController;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class PostAdminControllerFactory implements FactoryInterface
+class PostAdminControllerFactory implements \Zend\ServiceManager\Factory\FactoryInterface
 {
     /**
      * Create controller
@@ -31,10 +31,10 @@ class PostAdminControllerFactory implements FactoryInterface
      * @param ServiceLocatorInterface $controllerManager
      * @return BoardAdminController
      */
-    public function createService(ServiceLocatorInterface $controllerManager)
+    public function __invoke(\Interop\Container\ContainerInterface $controllerManager, $requestedName, array $options = null)
     {
         /** @var ServiceLocatorInterface $serviceLocator */
-        $serviceLocator = $controllerManager->getServiceLocator();
+        $serviceLocator = $controllerManager;
 
         /** @var \Eye4web\Zf2Board\Service\BoardService $boardService */
         $boardService = $serviceLocator->get('Eye4web\Zf2Board\Service\BoardService');

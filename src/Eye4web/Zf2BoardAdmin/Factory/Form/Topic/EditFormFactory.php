@@ -23,7 +23,7 @@ use Eye4web\Zf2BoardAdmin\Form\Topic\EditForm;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class EditFormFactory implements FactoryInterface
+class EditFormFactory implements \Zend\ServiceManager\Factory\FactoryInterface
 {
     /**
      * Create service
@@ -31,7 +31,7 @@ class EditFormFactory implements FactoryInterface
      * @param ServiceLocatorInterface $serviceLocator
      * @return EditForm
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(\Interop\Container\ContainerInterface $serviceLocator, $requestedName, array $options = null)
     {
         /** @var \Eye4web\Zf2Board\Options\ModuleOptions $moduleOptions */
         $moduleOptions = $serviceLocator->get('Eye4web\Zf2Board\Options\ModuleOptions');

@@ -23,7 +23,7 @@ use Eye4web\Zf2BoardAdmin\Service\BoardAdminService;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class BoardAdminServiceFactory implements FactoryInterface
+class BoardAdminServiceFactory implements \Zend\ServiceManager\Factory\FactoryInterface
 {
     /**
      * Create service
@@ -31,7 +31,7 @@ class BoardAdminServiceFactory implements FactoryInterface
      * @param ServiceLocatorInterface $serviceLocator
      * @return BoardAdminService
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(\Interop\Container\ContainerInterface $serviceLocator, $requestedName, array $options = null)
     {
         /** @var \Eye4web\Zf2BoardAdmin\Options\ModuleOptions $options */
         $options = $serviceLocator->get('Eye4web\Zf2BoardAdmin\Options\ModuleOptions');
