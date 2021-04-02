@@ -31,7 +31,7 @@ class TopicAdminControllerFactory implements \Zend\ServiceManager\Factory\Factor
      * @param ServiceLocatorInterface $controllerManager
      * @return BoardAdminController
      */
-    public function __invoke(\Interop\Container\ContainerInterface $controllerManager, $requestedName, array $options = null)
+    public function __invoke(\Psr\Container\ContainerInterface $controllerManager, $requestedName, array $options = null)
     {
         /** @var ServiceLocatorInterface $serviceLocator */
         $serviceLocator = $controllerManager;

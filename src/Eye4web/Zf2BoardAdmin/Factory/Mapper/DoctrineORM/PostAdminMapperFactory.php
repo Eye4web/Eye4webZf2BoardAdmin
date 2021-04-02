@@ -32,7 +32,7 @@ class PostAdminMapperFactory implements \Zend\ServiceManager\Factory\FactoryInte
      * @param ServiceLocatorInterface $serviceManager
      * @return PostAdminMapper
      */
-    public function __invoke(\Interop\Container\ContainerInterface $serviceManager, $requestedName, array $options = null)
+    public function __invoke(\Psr\Container\ContainerInterface $serviceManager, $requestedName, array $options = null)
     {
         /** @var \Doctrine\ORM\EntityManager $objectManager */
         $objectManager = $serviceManager->get('Doctrine\ORM\EntityManager');

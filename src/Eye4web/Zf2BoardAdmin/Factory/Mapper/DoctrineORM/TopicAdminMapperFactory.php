@@ -32,7 +32,7 @@ class TopicAdminMapperFactory implements \Zend\ServiceManager\Factory\FactoryInt
      * @param ServiceLocatorInterface $serviceManager
      * @return TopicAdminMapper
      */
-    public function __invoke(\Interop\Container\ContainerInterface $serviceManager, $requestedName, array $options = null)
+    public function __invoke(\Psr\Container\ContainerInterface $serviceManager, $requestedName, array $options = null)
     {
         /** @var \Doctrine\ORM\EntityManager $objectManager */
         $objectManager = $serviceManager->get('Doctrine\ORM\EntityManager');

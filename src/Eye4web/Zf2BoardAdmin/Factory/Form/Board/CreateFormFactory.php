@@ -31,7 +31,7 @@ class CreateFormFactory implements \Zend\ServiceManager\Factory\FactoryInterface
      * @param ServiceLocatorInterface $serviceLocator
      * @return CreateForm
      */
-    public function __invoke(\Interop\Container\ContainerInterface $serviceLocator, $requestedName, array $options = null)
+    public function __invoke(\Psr\Container\ContainerInterface $serviceLocator, $requestedName, array $options = null)
     {
         /** @var \Eye4web\Zf2Board\Options\ModuleOptions $moduleOptions */
         $moduleOptions = $serviceLocator->get('Eye4web\Zf2Board\Options\ModuleOptions');
