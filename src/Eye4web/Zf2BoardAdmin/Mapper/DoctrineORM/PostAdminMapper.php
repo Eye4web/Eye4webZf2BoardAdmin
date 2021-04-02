@@ -33,7 +33,7 @@ class PostAdminMapper implements PostAdminMapperInterface
     protected $PostService;
 
     public function __construct(
-        ObjectManager $objectManager,
+        \Doctrine\Persistence\ObjectManager $objectManager,
         PostService $postService
     ) {
         $this->objectManager = $objectManager;

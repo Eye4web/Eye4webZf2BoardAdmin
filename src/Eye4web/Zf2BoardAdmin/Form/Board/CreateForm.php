@@ -24,7 +24,7 @@ use Eye4web\Zf2Board\Entity\BoardInterface;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Stdlib\Hydrator\ClassMethods;
+use Laminas\Hydrator\ClassMethodsHydrator;
 
 class CreateForm extends Form implements InputFilterProviderInterface
 {
@@ -33,7 +33,7 @@ class CreateForm extends Form implements InputFilterProviderInterface
         parent::__construct($name);
 
         $this->setObject($object);
-        $this->setHydrator(new ClassMethods(false));
+        $this->setHydrator(new ClassMethodsHydrator(false));
 
         $this->add([
             'name' => 'name',

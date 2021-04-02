@@ -35,11 +35,11 @@ class TopicAdminMapper implements TopicAdminMapperInterface
 
     /**
      * TopicAdminMapper constructor.
-     * @param ObjectManager $objectManager
+     * @param \Doctrine\Persistence\ObjectManager $objectManager
      * @param TopicService $topicService
      */
     public function __construct(
-        ObjectManager $objectManager,
+        \Doctrine\Persistence\ObjectManager $objectManager,
         TopicService $topicService
     ) {
         $this->objectManager = $objectManager;

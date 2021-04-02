@@ -39,7 +39,7 @@ class BoardAdminMapper implements BoardAdminMapperInterface
     protected $boardService;
 
     public function __construct(
-        ObjectManager $objectManager,
+        \Doctrine\Persistence\ObjectManager $objectManager,
         BoardService $boardService,
         BoardMapperInterface $boardMapper,
         ModuleOptionsInterface $options

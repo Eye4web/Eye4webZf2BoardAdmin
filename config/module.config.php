@@ -32,21 +32,21 @@ return [
                 'may_terminate' => true,
                 'child_routes' => [
                     'zf2-board-admin' => [
-                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                        'type' => 'Zend\Router\Http\Literal',
                         'options' => [
                             'route' => '/board'
                         ],
                         'may_terminate' => false,
                         'child_routes' => [
                             'board' => [
-                                'type' => 'Zend\Mvc\Router\Http\Literal',
+                                'type' => 'Zend\Router\Http\Literal',
                                 'options' => [
                                     'route' => '/board'
                                 ],
                                 'may_terminate' => false,
                                 'child_routes' => [
                                     'list' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                                        'type' => 'Zend\Router\Http\Literal',
                                         'options' => [
                                             'route' => '/list',
                                             'defaults' => [
@@ -56,7 +56,7 @@ return [
                                         ],
                                     ],
                                     'edit' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/edit/:id',
                                             'defaults' => [
@@ -66,7 +66,7 @@ return [
                                         ],
                                     ],
                                     'create' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Literal',
+                                        'type' => 'Zend\Router\Http\Literal',
                                         'options' => [
                                             'route' => '/create',
                                             'defaults' => [
@@ -76,7 +76,7 @@ return [
                                         ],
                                     ],
                                     'delete' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/delete/:id',
                                             'defaults' => [
@@ -88,14 +88,14 @@ return [
                                 ],
                             ],
                             'topic' => [
-                                'type' => 'Zend\Mvc\Router\Http\Literal',
+                                'type' => 'Zend\Router\Http\Literal',
                                 'options' => [
                                     'route' => '/topic'
                                 ],
                                 'may_terminate' => false,
                                 'child_routes' => [
                                     'list' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/list/:board',
                                             'defaults' => [
@@ -105,7 +105,7 @@ return [
                                         ],
                                     ],
                                     'edit' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/edit/:id',
                                             'defaults' => [
@@ -115,7 +115,7 @@ return [
                                         ],
                                     ],
                                     'delete' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/delete/:id',
                                             'defaults' => [
@@ -125,7 +125,7 @@ return [
                                         ],
                                     ],
                                     'lock' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/lock/:id',
                                             'defaults' => [
@@ -135,7 +135,7 @@ return [
                                         ],
                                     ],
                                     'unlock' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/unlock/:id',
                                             'defaults' => [
@@ -145,7 +145,7 @@ return [
                                         ],
                                     ],
                                     'pin' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/pin/:id',
                                             'defaults' => [
@@ -155,7 +155,7 @@ return [
                                         ],
                                     ],
                                     'unpin' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/unpin/:id',
                                             'defaults' => [
@@ -167,14 +167,14 @@ return [
                                 ],
                             ],
                             'post' => [
-                                'type' => 'Zend\Mvc\Router\Http\Literal',
+                                'type' => 'Zend\Router\Http\Literal',
                                 'options' => [
                                     'route' => '/post'
                                 ],
                                 'may_terminate' => false,
                                 'child_routes' => [
                                     'list' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/list/:topic',
                                             'defaults' => [
@@ -184,7 +184,7 @@ return [
                                         ],
                                     ],
                                     'edit' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/edit/:id',
                                             'defaults' => [
@@ -194,7 +194,7 @@ return [
                                         ],
                                     ],
                                     'delete' => [
-                                        'type' => 'Zend\Mvc\Router\Http\Segment',
+                                        'type' => 'Zend\Router\Http\Segment',
                                         'options' => [
                                             'route' => '/delete/:id',
                                             'defaults' => [
