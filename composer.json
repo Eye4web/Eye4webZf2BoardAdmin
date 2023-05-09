@@ -23,7 +23,7 @@
     "require": {
         "php": "^8.1",
         "laminas/laminas-mvc": "^3.0",
-        "eye4web/eye4web-zf2-board": "dev-laminas",
+        "eye4web/eye4web-zf2-board": "dev-laminas3",
         "zf-commons/zfc-admin": "dev-zf3",
         "cocur/slugify": "0.10.*"
     },
