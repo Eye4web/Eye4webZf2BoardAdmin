@@ -9,6 +9,5 @@ $form = $this->form;
 
 <?=$this->form()->openTag($form)?>
 <?=$this->formRow($form->get('name'))?><br />
-<?=$this->formHidden($form->get('csrf'))?><br />
 <?=$this->formButton($form->get('submit')->setLabel('Edit'))?>
 <?=$this->form()->closeTag($form)?>
