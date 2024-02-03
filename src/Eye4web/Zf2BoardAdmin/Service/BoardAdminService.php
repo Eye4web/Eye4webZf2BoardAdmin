@@ -96,7 +96,6 @@ class BoardAdminService implements BoardAdminServiceInterface, EventManagerAware
     {
         $form = $this->boardEditForm;
         $form->bind($board);
-        
         $this->getEventManager()->trigger('board.edit.preBind', $this, [
             'board' => $board,
             'form' => $form,
